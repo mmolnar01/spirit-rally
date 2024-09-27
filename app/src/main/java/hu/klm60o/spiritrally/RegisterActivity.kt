@@ -10,7 +10,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -69,12 +74,45 @@ fun RegisterScreen() {
                 .fillMaxHeight()
                 .padding(40.dp)) {
 
+            //Üdvözlő üzenet
             Text(text = "Üdvözöl a Spirit Rally!", fontSize = 25.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 50.dp, 0.dp, 0.dp),
                 textAlign = TextAlign.Center
             )
+
+            //Felhasználünév bemeneti mező
+            OutlinedTextField(value = userEmail.value, onValueChange = {
+                userEmail.value = it
+            },
+                leadingIcon = {
+                    Icon(Icons.Default.Person, contentDescription = "email")
+                },
+                label = {
+                    Text(text = "Email")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 20.dp, 0.dp, 0.dp)
+            )
+
+            //Csapatnév bemeneti mező
+            OutlinedTextField(value = userTeamName.value, onValueChange = {
+                userTeamName.value = it
+            },
+                leadingIcon = {
+                    Icon(Icons.Default.Info, contentDescription = "teamname")
+                },
+                label = {
+                    Text(text = "Csapatnév")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+            )
+
+            
         }
     }
 
