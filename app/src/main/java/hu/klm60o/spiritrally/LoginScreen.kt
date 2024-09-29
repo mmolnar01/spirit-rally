@@ -1,23 +1,18 @@
 package hu.klm60o.spiritrally
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -29,31 +24,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 
-class LoginActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            SpiritRallyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting3("Android")
-                }
-            }
-        }
-    }
+enum class LoginScreen() {
+    Login,
+    Register,
+    News,
+    Map
 }
 
 @Composable
-fun LoginScreen() {
+fun LoginScreenComposable() {
     Surface {
         //Változók a felhasználói input tárolására
         val userEmail = remember {
@@ -113,7 +100,8 @@ fun LoginScreen() {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             //Regisztrálás gomb
@@ -152,7 +140,6 @@ fun LoginScreen() {
     }
 }
 
-
 @Composable
 fun Greeting3(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -165,7 +152,7 @@ fun Greeting3(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun LoginPreview() {
     SpiritRallyTheme {
-        LoginScreen()
+        LoginScreenComposable()
     }
 }
 
@@ -173,6 +160,6 @@ fun LoginPreview() {
 @Composable
 fun LoginPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
-        LoginScreen()
+        LoginScreenComposable()
     }
 }

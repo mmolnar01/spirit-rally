@@ -1,15 +1,11 @@
-package hu.klm60o.spiritrally
+package hu.klm60o.spiritrally.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -17,7 +13,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -27,36 +22,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.createBitmap
+import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 
-class RegisterActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            SpiritRallyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    RegisterScreen()
-                }
-            }
-        }
-    }
-}
-
 @Composable
-fun RegisterScreen() {
+fun RegisterScreenComposable() {
     Surface {
         //Változók a felhasználói input elátrolására
         val userEmail = remember {
@@ -97,7 +74,7 @@ fun RegisterScreen() {
                 textAlign = TextAlign.Center
             )
 
-            //Felhasználünév bemeneti mező
+            //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
             },
@@ -139,7 +116,8 @@ fun RegisterScreen() {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             //Jelszó újra bemeneti mező
@@ -154,7 +132,8 @@ fun RegisterScreen() {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             //Regisztrálás gomb
@@ -210,7 +189,7 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun RegisterPreview() {
     SpiritRallyTheme {
-        RegisterScreen()
+        RegisterScreenComposable()
     }
 }
 
@@ -218,6 +197,6 @@ fun RegisterPreview() {
 @Composable
 fun RegisterPreviewDark() {
     SpiritRallyTheme(darkTheme = true) {
-        RegisterScreen()
+        RegisterScreenComposable()
     }
 }
