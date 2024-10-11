@@ -29,11 +29,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 
 @Composable
-fun RegisterScreenComposable() {
+fun RegisterScreenComposable(navController: NavController) {
+    val navController = navController
     Surface {
         //Változók a felhasználói input elátrolására
         val userEmail = remember {
@@ -162,7 +165,9 @@ fun RegisterScreenComposable() {
                 Text(text = "Bejelentkezés",
                     modifier = Modifier
                         .padding(5.dp)
-                        .clickable { /*TODO*/ },
+                        .clickable {
+                            navController.navigate(LoginScreen)
+                        },
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -189,7 +194,7 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun RegisterPreview() {
     SpiritRallyTheme {
-        RegisterScreenComposable()
+        //RegisterScreenComposable()
     }
 }
 
@@ -197,6 +202,6 @@ fun RegisterPreview() {
 @Composable
 fun RegisterPreviewDark() {
     SpiritRallyTheme(darkTheme = true) {
-        RegisterScreenComposable()
+        //RegisterScreenComposable()
     }
 }
