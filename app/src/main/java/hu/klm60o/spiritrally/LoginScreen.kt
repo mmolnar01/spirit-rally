@@ -32,13 +32,6 @@ import androidx.compose.ui.unit.sp
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 
-enum class LoginScreen() {
-    Login,
-    Register,
-    News,
-    Map
-}
-
 @Composable
 fun LoginScreenComposable() {
     Surface {

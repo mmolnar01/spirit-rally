@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
+import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,3 +26,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Serializable
+object ScreenA
