@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 
@@ -56,7 +57,7 @@ fun LoginScreenComposable(navController: NavController) {
                 .padding(20.dp)) {
 
             //Kép
-            Image(painter = painterResource(id = R.drawable.spirit_rally),
+            Image(painter = painterResource(id = R.drawable.spirit_rally_transparent),
                 contentDescription = "image",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,7 +156,9 @@ fun Greeting3(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun LoginPreview() {
     SpiritRallyTheme {
-        //LoginScreenComposable()
+        LoginScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }
 
@@ -163,6 +166,8 @@ fun LoginPreview() {
 @Composable
 fun LoginPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
-        //LoginScreenComposable()
+        LoginScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }

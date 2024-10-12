@@ -82,7 +82,7 @@ fun RegisterScreenComposable(navController: NavController) {
                 .padding(20.dp)) {
 
             //Kép
-            Image(painter = painterResource(id = R.drawable.spirit_rally),
+            Image(painter = painterResource(id = R.drawable.spirit_rally_transparent),
                 contentDescription = "image",
                 modifier = Modifier
                     .fillMaxWidth()
