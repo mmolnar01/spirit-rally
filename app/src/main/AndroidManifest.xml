@@ -13,6 +13,11 @@
         android:theme="@style/Theme.SpiritRally"
         tools:targetApi="31">
         <activity
+            android:name=".assets.IconQRCode"
+            android:exported="false"
+            android:label="@string/title_activity_icon_qrcode"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
             android:name=".screens.NewsScreen"
             android:exported="false"
             android:label="@string/title_activity_news_screen"

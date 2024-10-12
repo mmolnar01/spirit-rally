@@ -4,4 +4,5 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_user_view_model">UserViewModel</string>
     <string name="title_activity_news_screen">NewsScreen</string>
+    <string name="title_activity_icon_qrcode">IconQRCode</string>
 </resources>
