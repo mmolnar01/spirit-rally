@@ -5,4 +5,8 @@
     <string name="title_activity_user_view_model">UserViewModel</string>
     <string name="title_activity_news_screen">NewsScreen</string>
     <string name="title_activity_icon_qrcode">IconQRCode</string>
+    <string name="title_activity_my_bottom_app_bar">MyBottomAppBar</string>
+    <string name="title_activity_map_screen">MapScreen</string>
+    <string name="title_activity_result_screen">ResultScreen</string>
+    <string name="title_activity_profile_screen">ProfileScreen</string>
 </resources>

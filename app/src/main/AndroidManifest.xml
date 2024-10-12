@@ -13,6 +13,26 @@
         android:theme="@style/Theme.SpiritRally"
         tools:targetApi="31">
         <activity
+            android:name=".screens.ProfileScreen"
+            android:exported="false"
+            android:label="@string/title_activity_profile_screen"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
+            android:name=".screens.ResultScreen"
+            android:exported="false"
+            android:label="@string/title_activity_result_screen"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
+            android:name=".screens.MapScreen"
+            android:exported="false"
+            android:label="@string/title_activity_map_screen"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
+            android:name=".screens.MyBottomAppBar"
+            android:exported="false"
+            android:label="@string/title_activity_my_bottom_app_bar"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
             android:name=".assets.IconQRCode"
             android:exported="false"
             android:label="@string/title_activity_icon_qrcode"
