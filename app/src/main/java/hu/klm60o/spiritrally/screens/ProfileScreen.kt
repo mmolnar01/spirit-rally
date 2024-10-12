@@ -20,12 +20,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
-fun ProfileScreenComposable() {
+fun ProfileScreenComposable(navController: NavController) {
+    val navController = navController
     Scaffold(
-        bottomBar = { MyBottomAppbarComposable() }
+        bottomBar = { MyBottomAppbarComposable(navController) }
     ) {
         innerPadding ->
         Column(verticalArrangement = Arrangement.Center,
@@ -37,7 +41,7 @@ fun ProfileScreenComposable() {
         ) {
             Text("Ez itt a profil képernyő")
             OutlinedButton(onClick = {
-                /* TODO */
+                navController.navigate(LoginScreen)
             },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -59,7 +63,9 @@ fun ProfileScreenComposable() {
 @Composable
 fun ProfilePreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
-        ProfileScreenComposable()
+        ProfileScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }
 
@@ -67,6 +73,8 @@ fun ProfilePreview() {
 @Composable
 fun ProfilePreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
-        ProfileScreenComposable()
+        ProfileScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }

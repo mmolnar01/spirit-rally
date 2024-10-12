@@ -101,7 +101,7 @@ fun LoginScreenComposable(navController: NavController) {
 
             //Regisztrálás gomb
             OutlinedButton(onClick = {
-
+                navController.navigate(NewsScreen)
             },
                 modifier = Modifier
                     .fillMaxWidth()

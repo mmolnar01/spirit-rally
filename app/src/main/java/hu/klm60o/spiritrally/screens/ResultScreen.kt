@@ -16,12 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
-fun ResultScreenComposable() {
+fun ResultScreenComposable(navController: NavController) {
+    val navController = navController
     Scaffold(
-        bottomBar = { MyBottomAppbarComposable() }
+        bottomBar = { MyBottomAppbarComposable(navController) }
     ) {
         innerPadding ->
         Column(verticalArrangement = Arrangement.Center,
@@ -41,7 +44,9 @@ fun ResultScreenComposable() {
 @Composable
 fun ResultPreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
-        ResultScreenComposable()
+        ResultScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }
 
@@ -49,6 +54,8 @@ fun ResultPreview() {
 @Composable
 fun ResultPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
-        ResultScreenComposable()
+        ResultScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }

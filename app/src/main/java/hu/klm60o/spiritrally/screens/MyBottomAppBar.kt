@@ -29,11 +29,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import hu.klm60o.spiritrally.MapScreen
+import hu.klm60o.spiritrally.NewsScreen
+import hu.klm60o.spiritrally.ProfileScreen
+import hu.klm60o.spiritrally.ResultScreen
 import hu.klm60o.spiritrally.assets.QrCode
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
-fun MyBottomAppbarComposable() {
+fun MyBottomAppbarComposable(navController: NavController) {
+    val navController = navController
     BottomAppBar(
         actions = {
             Column(
@@ -43,7 +50,9 @@ fun MyBottomAppbarComposable() {
                     .fillMaxHeight()
                     .padding(10.dp, 0.dp, 10.dp, 0.dp)
             ) {
-                IconButton(onClick = { /*TODO*/}) {
+                IconButton(onClick = {
+                    navController.navigate(NewsScreen)
+                }) {
                     Icon(Icons.Filled.Home, contentDescription = "News screen")
                 }
                 Text(text = "Hírek",
@@ -60,7 +69,9 @@ fun MyBottomAppbarComposable() {
                     .fillMaxHeight()
                     .padding(10.dp, 0.dp, 10.dp, 0.dp)
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    navController.navigate(MapScreen)
+                }) {
                     Icon(Icons.Filled.Info, contentDescription = "Info screen")
                 }
                 Text(text = "Térkép",
@@ -77,7 +88,9 @@ fun MyBottomAppbarComposable() {
                     .fillMaxHeight()
                     .padding(10.dp, 0.dp, 10.dp, 0.dp)
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    navController.navigate(ResultScreen)
+                }) {
                     Icon(Icons.Filled.CheckCircle, contentDescription = "Results screen")
                 }
                 Text(text = "Eredmények",
@@ -94,7 +107,9 @@ fun MyBottomAppbarComposable() {
                     .fillMaxHeight()
                     .padding(10.dp, 0.dp, 10.dp, 0.dp)
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    navController.navigate(ProfileScreen)
+                }) {
                     Icon(Icons.Filled.Person, contentDescription = "Profile screen")
                 }
                 Text(text = "Profil",
@@ -121,7 +136,9 @@ fun MyBottomAppbarComposable() {
 @Composable
 fun MyBottomAppBarPreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
-        MyBottomAppbarComposable()
+        MyBottomAppbarComposable(
+            navController = rememberNavController()
+        )
     }
 }
 
@@ -129,6 +146,8 @@ fun MyBottomAppBarPreview() {
 @Composable
 fun MyBottomAppBarPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
-        MyBottomAppbarComposable()
+        MyBottomAppbarComposable(
+            navController = rememberNavController()
+        )
     }
 }
