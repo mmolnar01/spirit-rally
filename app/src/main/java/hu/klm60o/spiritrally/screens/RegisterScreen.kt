@@ -1,5 +1,6 @@
 package hu.klm60o.spiritrally.screens
 
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,11 +9,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -24,18 +30,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.R
+import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
+import hu.klm60o.spiritrally.useful.validateEmail
+import hu.klm60o.spiritrally.useful.validatePassword
+import hu.klm60o.spiritrally.useful.validatePasswordRepeat
 
 @Composable
 fun RegisterScreenComposable(navController: NavController) {
+    var validEmail = true
+    var validPaswword = true
+    var validPasswordRepeat = true
     val navController = navController
     Surface {
         //Változók a felhasználói input elátrolására
@@ -80,7 +95,22 @@ fun RegisterScreenComposable(navController: NavController) {
             //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
+                validEmail = validateEmail(userEmail.value)
             },
+                supportingText = {
+                    if(!validEmail) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Érvénytelen Email",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if(!validEmail) {
+                        Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
+                    }
+                },
                 leadingIcon = {
                     Icon(Icons.Default.Person, contentDescription = "email")
                 },
@@ -89,13 +119,17 @@ fun RegisterScreenComposable(navController: NavController) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp)
+                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
             //Csapatnév bemeneti mező
             OutlinedTextField(value = userTeamName.value, onValueChange = {
                 userTeamName.value = it
             },
+                supportingText = {
+
+                },
                 leadingIcon = {
                     Icon(Icons.Default.Info, contentDescription = "teamname")
                 },
@@ -110,7 +144,22 @@ fun RegisterScreenComposable(navController: NavController) {
             //Jelszó bemeneti mező
             OutlinedTextField(value = userPassword.value, onValueChange = {
                 userPassword.value = it
+                validPaswword = validatePassword(userPassword.value)
             },
+                supportingText = {
+                    if(!validPaswword) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "A jelszó legyen min. 5 karakteres",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if(!validPaswword) {
+                        Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
+                    }
+                },
                 leadingIcon = {
                     Icon(Icons.Default.Lock, contentDescription = "password")
                 },
@@ -120,13 +169,29 @@ fun RegisterScreenComposable(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
             //Jelszó újra bemeneti mező
             OutlinedTextField(value = userPasswordRepeat.value, onValueChange = {
                 userPasswordRepeat.value = it
+                validPasswordRepeat = validatePasswordRepeat(userPassword.value, userPasswordRepeat.value)
             },
+                supportingText = {
+                    if(!validPasswordRepeat) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "A jelszavak nem egyeznek",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if(!validPasswordRepeat) {
+                        Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
+                    }
+                },
                 leadingIcon = {
                     Icon(Icons.Default.Lock, contentDescription = "passwordrepeat")
                 },
@@ -136,11 +201,13 @@ fun RegisterScreenComposable(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
             //Regisztrálás gomb
-            OutlinedButton(onClick = { /*TODO*/ },
+            ElevatedButton (onClick = { /*TODO*/ },
+                elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 20.dp, 0.dp, 0.dp)) {
@@ -181,6 +248,10 @@ fun RegisterScreenComposable(navController: NavController) {
 
 }
 
+fun validateEmailTest(email: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
+
 
 @Composable
 fun Greeting2(name: String, modifier: Modifier = Modifier) {
@@ -194,7 +265,9 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun RegisterPreview() {
     SpiritRallyTheme {
-        //RegisterScreenComposable()
+        RegisterScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }
 
@@ -202,6 +275,8 @@ fun RegisterPreview() {
 @Composable
 fun RegisterPreviewDark() {
     SpiritRallyTheme(darkTheme = true) {
-        //RegisterScreenComposable()
+        RegisterScreenComposable(
+            navController = rememberNavController()
+        )
     }
 }

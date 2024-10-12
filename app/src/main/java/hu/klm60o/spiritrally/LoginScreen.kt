@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,7 +82,8 @@ fun LoginScreenComposable(navController: NavController) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp)
+                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
             //Jelszó bemeneti mező
@@ -96,7 +99,8 @@ fun LoginScreenComposable(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
             //Regisztrálás gomb

@@ -9,4 +9,6 @@
     <string name="title_activity_map_screen">MapScreen</string>
     <string name="title_activity_result_screen">ResultScreen</string>
     <string name="title_activity_profile_screen">ProfileScreen</string>
+    <string name="title_activity_useful_methods">UsefulMethods</string>
+    <string name="title_activity_icon_error">IconError</string>
 </resources>

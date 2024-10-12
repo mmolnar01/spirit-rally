@@ -13,6 +13,16 @@
         android:theme="@style/Theme.SpiritRally"
         tools:targetApi="31">
         <activity
+            android:name=".assets.IconError"
+            android:exported="false"
+            android:label="@string/title_activity_icon_error"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
+            android:name=".useful.UsefulMethods"
+            android:exported="false"
+            android:label="@string/title_activity_useful_methods"
+            android:theme="@style/Theme.SpiritRally" />
+        <activity
             android:name=".screens.ProfileScreen"
             android:exported="false"
             android:label="@string/title_activity_profile_screen"

@@ -124,7 +124,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
             FloatingActionButton(
                 onClick = { /*TODO*/ },
                 containerColor = BottomAppBarDefaults.containerColor,
-                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
             ) {
                 Icon(QrCode, contentDescription = "Read QR code")
             }
