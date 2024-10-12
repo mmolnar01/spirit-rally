@@ -56,6 +56,7 @@ android {
 dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
+    implementation("com.google.firebase:firebase-auth:23.0.0")
 
     val nav_version = "2.8.2"
 

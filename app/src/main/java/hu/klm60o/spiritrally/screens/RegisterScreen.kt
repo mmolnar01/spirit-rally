@@ -1,6 +1,7 @@
 package hu.klm60o.spiritrally.screens
 
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
@@ -206,7 +210,14 @@ fun RegisterScreenComposable(navController: NavController) {
             )
 
             //Regisztrálás gomb
-            ElevatedButton (onClick = { /*TODO*/ },
+            ElevatedButton (onClick = {
+                if(validEmail && validPaswword && validPasswordRepeat) {
+                    
+                }
+            },
+                enabled = userEmail.value.isNotEmpty() && validEmail
+                        && userPassword.value.isNotEmpty() && validPaswword
+                        && userPasswordRepeat.value.isNotEmpty() && validPasswordRepeat,
                 elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
                     .fillMaxWidth()
