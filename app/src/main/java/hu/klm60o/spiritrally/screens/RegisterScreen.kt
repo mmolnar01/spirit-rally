@@ -1,5 +1,6 @@
 package hu.klm60o.spiritrally.screens
 
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -29,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentManager.TAG
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -46,6 +49,8 @@ import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
+import hu.klm60o.spiritrally.useful.registerUser
+import hu.klm60o.spiritrally.useful.showToast
 import hu.klm60o.spiritrally.useful.validateEmail
 import hu.klm60o.spiritrally.useful.validatePassword
 import hu.klm60o.spiritrally.useful.validatePasswordRepeat
@@ -56,6 +61,7 @@ fun RegisterScreenComposable(navController: NavController) {
     var validPaswword = true
     var validPasswordRepeat = true
     val navController = navController
+    val context = LocalContext.current
     Surface {
         //Változók a felhasználói input elátrolására
         val userEmail = remember {
@@ -212,7 +218,16 @@ fun RegisterScreenComposable(navController: NavController) {
             //Regisztrálás gomb
             ElevatedButton (onClick = {
                 if(validEmail && validPaswword && validPasswordRepeat) {
-                    
+                    registerUser(userEmail.value, userPassword.value) { error ->
+                        if(error == null) {
+                            showToast(context, "Sikeres regisztráció. Kérlek erősítsd meg az Email címedet!")
+                            Firebase.auth.currentUser?.sendEmailVerification()
+                            Firebase.auth.signOut()
+                            navController.navigate(LoginScreen)
+                        } else {
+                            showToast(context, "Sikertelen regisztráció")
+                        }
+                    }
                 }
             },
                 enabled = userEmail.value.isNotEmpty() && validEmail

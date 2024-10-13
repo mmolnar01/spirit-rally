@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
@@ -41,7 +43,12 @@ fun ProfileScreenComposable(navController: NavController) {
         ) {
             Text("Ez itt a profil képernyő")
             OutlinedButton(onClick = {
-                navController.navigate(LoginScreen)
+                Firebase.auth.signOut()
+                navController.navigate(LoginScreen) {
+                    popUpTo(navController.graph.id) {
+                        inclusive = true
+                    }
+                }
             },
                 modifier = Modifier
                     .fillMaxWidth()

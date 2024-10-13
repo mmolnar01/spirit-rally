@@ -13,7 +13,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -23,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,12 +37,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.R
+import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
+import hu.klm60o.spiritrally.useful.loginUSer
+import hu.klm60o.spiritrally.useful.registerUser
+import hu.klm60o.spiritrally.useful.showToast
+import hu.klm60o.spiritrally.useful.validateEmail
+import hu.klm60o.spiritrally.useful.validatePassword
 
 @Composable
 fun LoginScreenComposable(navController: NavController) {
+    var validEmail = true
+    var validPaswword = true
     val navController = navController
+    val context = LocalContext.current
     Surface {
         //Változók a felhasználói input tárolására
         val userEmail = remember {
@@ -71,10 +86,25 @@ fun LoginScreenComposable(navController: NavController) {
                 textAlign = TextAlign.Center
             )
 
-            //Felhasználünév bemeneti mező
+            //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
+                validEmail = validateEmail(userEmail.value)
             },
+                supportingText = {
+                    if(!validEmail) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Érvénytelen Email",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if(!validEmail) {
+                        Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
+                    }
+                },
                 leadingIcon = {
                     Icon(Icons.Default.Person, contentDescription = "email")
                 },
@@ -90,7 +120,22 @@ fun LoginScreenComposable(navController: NavController) {
             //Jelszó bemeneti mező
             OutlinedTextField(value = userPassword.value, onValueChange = {
                 userPassword.value = it
+                validPaswword = validatePassword(userPassword.value)
             },
+                supportingText = {
+                    if(!validPaswword) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "A jelszó legyen min. 5 karakteres",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if(!validPaswword) {
+                        Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
+                    }
+                },
                 leadingIcon = {
                     Icon(Icons.Default.Lock, contentDescription = "password")
                 },
@@ -104,10 +149,29 @@ fun LoginScreenComposable(navController: NavController) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
-            //Regisztrálás gomb
-            OutlinedButton(onClick = {
-                navController.navigate(NewsScreen)
+            //Bejelentkezés gomb
+            ElevatedButton(onClick = {
+                if(validEmail && validPaswword) {
+                    loginUSer(userEmail.value, userPassword.value) { error ->
+                        if(error == null) {
+                            if(Firebase.auth.currentUser?.isEmailVerified() == true) {
+                                showToast(context, "Sikeres bejelentkezés!")
+                                navController.navigate(NewsScreen) {
+                                    popUpTo(navController.graph.id) {
+                                        inclusive = true
+                                    }
+                                }
+                            } else {
+                                showToast(context, "Az Email nincs megerősítve")
+                            }
+                        } else {
+                            showToast(context, "Sikertelen bejelentkezés")
+                        }
+                    }
+                }
             },
+                enabled = userEmail.value.isNotEmpty() && userPassword.value.isNotEmpty(),
+                elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 20.dp, 0.dp, 0.dp)) {

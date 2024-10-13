@@ -1,6 +1,11 @@
 package hu.klm60o.spiritrally.useful
 
+import android.content.Context
 import android.util.Patterns
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 fun validateEmail(email: String): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -12,4 +17,22 @@ fun validatePassword(password: String): Boolean {
 
 fun validatePasswordRepeat(password: String, passwordRepeat: String): Boolean {
     return password.equals(passwordRepeat)
+}
+
+fun registerUser(email: String, password: String, onResult: (Throwable?) -> Unit) {
+    Firebase.auth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener { onResult(it.exception) }
+}
+
+fun loginUSer(email: String, password: String, onResult: (Throwable?) -> Unit) {
+    Firebase.auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener { onResult(it.exception) }
+}
+
+fun showToast(context: Context, msg: String) {
+    Toast.makeText(
+        context,
+        msg,
+        Toast.LENGTH_SHORT
+    ).show()
 }

@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.screens.MapScreenComposable
 import hu.klm60o.spiritrally.screens.NewsScreenComposable
 import hu.klm60o.spiritrally.screens.ProfileScreenComposable
@@ -21,10 +23,16 @@ import kotlinx.serialization.Serializable
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val startDestination: Any
+        if(Firebase.auth.currentUser != null) {
+            startDestination = NewsScreen
+        } else {
+            startDestination = LoginScreen
+        }
         setContent {
             SpiritRallyTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = LoginScreen) {
+                NavHost(navController = navController, startDestination = startDestination) {
                     composable<LoginScreen> {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
