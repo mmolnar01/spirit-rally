@@ -41,6 +41,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
+import hu.klm60o.spiritrally.data.CurrentRaceData
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.loginUSer
 import hu.klm60o.spiritrally.useful.registerUser
@@ -161,6 +162,8 @@ fun LoginScreenComposable(navController: NavController) {
                                         inclusive = true
                                     }
                                 }
+                                var currentRaceData: CurrentRaceData
+                                
                             } else {
                                 showToast(context, "Az Email nincs megerősítve")
                             }
