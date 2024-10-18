@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
@@ -162,8 +163,19 @@ fun LoginScreenComposable(navController: NavController) {
                                         inclusive = true
                                     }
                                 }
-                                var currentRaceData: CurrentRaceData
-                                
+
+                                //Lekérdezzük a jelenlegi verseny adatait
+                                var currentRaceData: CurrentRaceData?
+                                Firebase.firestore.collection("race_data").document("current_race_data").get()
+                                    .addOnCompleteListener { task ->
+                                        if(task.isSuccessful) {
+                                            val document = task.result
+                                            if(document.exists()) {
+                                                currentRaceData = document.toObject(CurrentRaceData::class.java)
+                                                //showToast(context, currentRaceData?.distance.toString())
+                                            }
+                                        }
+                                    }
                             } else {
                                 showToast(context, "Az Email nincs megerősítve")
                             }
@@ -187,7 +199,7 @@ fun LoginScreenComposable(navController: NavController) {
                 )
             }
 
-            //A bejelentkezéshez
+            //A bejelentkezéshez navigáló szöveg
             Row(verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
@@ -209,14 +221,6 @@ fun LoginScreenComposable(navController: NavController) {
 
         }
     }
-}
-
-@Composable
-fun Greeting3(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)
