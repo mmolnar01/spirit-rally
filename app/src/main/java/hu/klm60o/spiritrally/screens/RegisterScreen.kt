@@ -51,6 +51,7 @@ import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.registerUser
+import hu.klm60o.spiritrally.useful.setDisplayName
 import hu.klm60o.spiritrally.useful.showToast
 import hu.klm60o.spiritrally.useful.validateEmail
 import hu.klm60o.spiritrally.useful.validatePassword
@@ -223,8 +224,12 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                     registerUser(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             showToast(context, "Sikeres regisztráció. Kérlek erősítsd meg az Email címedet!")
+
+                            setDisplayName(userTeamName.value)
+
                             Firebase.auth.currentUser?.sendEmailVerification()
                             Firebase.auth.signOut()
+
                             navController.navigate(LoginScreen)
                         } else {
                             showToast(context, "Sikertelen regisztráció")
@@ -234,7 +239,8 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
             },
                 enabled = userEmail.value.isNotEmpty() && validEmail
                         && userPassword.value.isNotEmpty() && validPaswword
-                        && userPasswordRepeat.value.isNotEmpty() && validPasswordRepeat,
+                        && userPasswordRepeat.value.isNotEmpty() && validPasswordRepeat
+                        && userTeamName.value.isNotEmpty(),
                 elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
                     .fillMaxWidth()
