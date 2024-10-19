@@ -209,13 +209,15 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                                                             viewModel.distance = currentRaceData?.distance
                                                             val racePoints = mutableListOf<RacePoint>()
 
-                                                            racePoints.add(RacePoint(currentRaceData?.start_point, null))
+                                                            racePoints.add(RacePoint(1, currentRaceData?.start_point, null))
 
+                                                            var i = 2
                                                             for (geoPoint in currentRaceData?.intermediate_points!!) {
-                                                                racePoints.add(RacePoint(geoPoint, null))
+                                                                racePoints.add(RacePoint(i, geoPoint, null))
+                                                                i++
                                                             }
 
-                                                            racePoints.add(RacePoint(currentRaceData?.end_point, null))
+                                                            racePoints.add(RacePoint(i, currentRaceData?.end_point, null))
 
                                                             viewModel.racePoints = racePoints
 
