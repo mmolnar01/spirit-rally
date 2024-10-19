@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.screens.MapScreenComposable
 import hu.klm60o.spiritrally.screens.NewsScreenComposable
 import hu.klm60o.spiritrally.screens.ProfileScreenComposable
@@ -31,6 +32,8 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             SpiritRallyTheme {
+                //NavController létrehozása
+                var viewModel = UserViewModel()
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = startDestination) {
                     composable<LoginScreen> {
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            LoginScreenComposable(navController = navController)
+                            LoginScreenComposable(navController = navController, viewModel = viewModel)
                         }
                     }
                     composable<RegisterScreen> {
@@ -46,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            RegisterScreenComposable(navController = navController)
+                            RegisterScreenComposable(navController = navController, viewModel = viewModel)
                         }
                     }
                     composable<NewsScreen> {
@@ -54,7 +57,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            NewsScreenComposable(navController = navController)
+                            NewsScreenComposable(navController = navController, viewModel = viewModel)
                         }
                     }
                     composable<MapScreen> {
@@ -62,7 +65,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            MapScreenComposable(navController = navController)
+                            MapScreenComposable(navController = navController, viewModel = viewModel)
                         }
                     }
                     composable<ResultScreen> {
@@ -70,7 +73,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            ResultScreenComposable(navController = navController)
+                            ResultScreenComposable(navController = navController, viewModel = viewModel)
                         }
                     }
                     composable<ProfileScreen> {
@@ -78,7 +81,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            ProfileScreenComposable(navController = navController)
+                            ProfileScreenComposable(navController = navController, viewModel = viewModel)
                         }
                     }
                 }

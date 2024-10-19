@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
@@ -43,6 +44,8 @@ import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.data.CurrentRaceData
+import hu.klm60o.spiritrally.data.RacePoint
+import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.loginUSer
 import hu.klm60o.spiritrally.useful.registerUser
@@ -51,11 +54,12 @@ import hu.klm60o.spiritrally.useful.validateEmail
 import hu.klm60o.spiritrally.useful.validatePassword
 
 @Composable
-fun LoginScreenComposable(navController: NavController) {
+fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel) {
     var validEmail = true
     var validPaswword = true
     val navController = navController
     val context = LocalContext.current
+    val viewModel = viewModel
     Surface {
         //Változók a felhasználói input tárolására
         val userEmail = remember {
@@ -157,12 +161,12 @@ fun LoginScreenComposable(navController: NavController) {
                     loginUSer(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             if(Firebase.auth.currentUser?.isEmailVerified() == true) {
-                                showToast(context, "Sikeres bejelentkezés!")
+                                /*showToast(context, "Sikeres bejelentkezés!")
                                 navController.navigate(NewsScreen) {
                                     popUpTo(navController.graph.id) {
                                         inclusive = true
                                     }
-                                }
+                                }*/
 
                                 //Lekérdezzük a jelenlegi verseny adatait
                                 var currentRaceData: CurrentRaceData?
@@ -170,9 +174,32 @@ fun LoginScreenComposable(navController: NavController) {
                                     .addOnCompleteListener { task ->
                                         if(task.isSuccessful) {
                                             val document = task.result
+                                            //Ha sikerül és létezik, betöltjük a viewModel-be és megyünk a NewsScreen-re
                                             if(document.exists()) {
                                                 currentRaceData = document.toObject(CurrentRaceData::class.java)
+
+                                                viewModel.distance = currentRaceData?.distance
+                                                val racePoints = mutableListOf<RacePoint>()
+
+                                                for (geoPoint in currentRaceData?.intermediate_points!!) {
+                                                    racePoints.add(RacePoint(geoPoint, null))
+                                                }
+
+                                                viewModel.racePoints = racePoints
+
+
+
                                                 //showToast(context, currentRaceData?.distance.toString())
+                                                showToast(context,
+                                                    viewModel.racePoints?.get(0).toString()
+                                                )
+
+                                                showToast(context, "Sikeres bejelentkezés!")
+                                                navController.navigate(NewsScreen) {
+                                                    popUpTo(navController.graph.id) {
+                                                        inclusive = true
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -185,6 +212,7 @@ fun LoginScreenComposable(navController: NavController) {
                     }
                 }
             },
+                //A bejelentkezés gomb csak akkor lesz kattintható, ha az email és a jelszó is megfeleleően meg lett adva
                 enabled = userEmail.value.isNotEmpty() && userPassword.value.isNotEmpty(),
                 elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
@@ -228,7 +256,8 @@ fun LoginScreenComposable(navController: NavController) {
 fun LoginPreview() {
     SpiritRallyTheme {
         LoginScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }
@@ -238,7 +267,8 @@ fun LoginPreview() {
 fun LoginPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
         LoginScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel = UserViewModel()
         )
     }
 }

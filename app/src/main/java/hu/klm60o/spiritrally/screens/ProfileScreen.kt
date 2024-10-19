@@ -25,11 +25,13 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.LoginScreen
+import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
-fun ProfileScreenComposable(navController: NavController) {
+fun ProfileScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
+    val viewModel = viewModel
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) }
     ) {
@@ -71,7 +73,8 @@ fun ProfileScreenComposable(navController: NavController) {
 fun ProfilePreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         ProfileScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }
@@ -81,7 +84,8 @@ fun ProfilePreview() {
 fun ProfilePreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
         ProfileScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }

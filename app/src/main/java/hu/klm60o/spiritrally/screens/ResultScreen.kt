@@ -18,11 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
-fun ResultScreenComposable(navController: NavController) {
+fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
+    val viewModel = viewModel
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) }
     ) {
@@ -45,7 +47,8 @@ fun ResultScreenComposable(navController: NavController) {
 fun ResultPreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         ResultScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }
@@ -55,7 +58,8 @@ fun ResultPreview() {
 fun ResultPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
         ResultScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }

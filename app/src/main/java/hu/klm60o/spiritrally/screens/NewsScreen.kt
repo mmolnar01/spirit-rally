@@ -32,14 +32,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.assets.QrCode
+import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
-fun NewsScreenComposable(navController: NavController) {
+fun NewsScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
+    val viewModel = viewModel
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) }
     ) {
@@ -77,7 +80,8 @@ fun NewsScreenComposable(navController: NavController) {
 fun NewsPreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         NewsScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }
@@ -87,7 +91,8 @@ fun NewsPreview() {
 fun NewsPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
         NewsScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }

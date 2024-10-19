@@ -58,7 +58,7 @@
             android:label="@string/title_activity_news_screen"
             android:theme="@style/Theme.SpiritRally" />
         <activity
-            android:name=".screens.UserViewModel"
+            android:name=".data.UserViewModel"
             android:exported="false"
             android:label="@string/title_activity_user_view_model"
             android:theme="@style/Theme.SpiritRally" />

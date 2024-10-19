@@ -48,6 +48,7 @@ import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
+import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.registerUser
 import hu.klm60o.spiritrally.useful.showToast
@@ -56,12 +57,13 @@ import hu.klm60o.spiritrally.useful.validatePassword
 import hu.klm60o.spiritrally.useful.validatePasswordRepeat
 
 @Composable
-fun RegisterScreenComposable(navController: NavController) {
+fun RegisterScreenComposable(navController: NavController, viewModel: UserViewModel) {
     var validEmail = true
     var validPaswword = true
     var validPasswordRepeat = true
     val navController = navController
     val context = LocalContext.current
+    val viewModel = viewModel
     Surface {
         //Változók a felhasználói input elátrolására
         val userEmail = remember {
@@ -292,7 +294,8 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 fun RegisterPreview() {
     SpiritRallyTheme {
         RegisterScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }
@@ -302,7 +305,8 @@ fun RegisterPreview() {
 fun RegisterPreviewDark() {
     SpiritRallyTheme(darkTheme = true) {
         RegisterScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel =  UserViewModel()
         )
     }
 }
