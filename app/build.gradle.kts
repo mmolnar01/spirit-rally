@@ -100,4 +100,8 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-analytics")
+
+    //OpenStreetMap
+    implementation("org.osmdroid:osmdroid-android:6.1.20")
+    implementation("tech.utsmankece:osm-android-compose:0.0.5")
 }
