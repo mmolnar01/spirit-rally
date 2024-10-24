@@ -42,7 +42,10 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
                 .padding(innerPadding)
         ) {
             //Text("Ez itt az eredmények képernyő")
-            RacePointListComposable(viewModel.racePoints!!)
+            if (viewModel.racePoints != null) {
+                RacePointListComposable(viewModel.racePoints!!)
+            }
+            //RacePointListComposable(viewModel.racePoints!!)
         }
 
     }
@@ -52,7 +55,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
 fun RacePointListComposable(racePoints: List<RacePoint>) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(10.dp)
     ) {
         items(racePoints, key = { racePoint -> racePoint.id!! }) { racePoint ->
@@ -66,7 +69,6 @@ fun RacePointComposable(racePoint: RacePoint) {
     Row(
         modifier = Modifier
             .padding(5.dp)
-            .fillMaxWidth()
     ) {
         Text(
             racePoint.location.toString()
