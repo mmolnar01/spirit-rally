@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +25,7 @@ import hu.klm60o.spiritrally.screens.ProfileScreenComposable
 import hu.klm60o.spiritrally.screens.RegisterScreenComposable
 import hu.klm60o.spiritrally.screens.ResultScreenComposable
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
+import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
@@ -41,6 +43,14 @@ class MainActivity : ComponentActivity() {
                 //val ViewModelSaver = Saver<UserViewModel, Any>(save = { it.Any }, restore = { UserViewModel() })
                 //var test by rememberSaveable { mutableStateOf(UserViewModel()) }
                 var viewModel = UserViewModel()
+                val currentUser = Firebase.auth.currentUser
+                if (currentUser != null) {
+                    getUserDataFromFirestore(
+                        currentUser = currentUser,
+                        viewModel = viewModel,
+                        context = LocalContext.current
+                    )
+                }
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = startDestination) {
                     composable<LoginScreen> {

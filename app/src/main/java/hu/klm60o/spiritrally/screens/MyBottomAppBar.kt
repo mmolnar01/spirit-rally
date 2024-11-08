@@ -52,7 +52,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
             ) {
                 IconButton(onClick = {
                     navController.navigate(NewsScreen)
-                }) {
+                },) {
                     Icon(Icons.Filled.Home, contentDescription = "News screen")
                 }
                 Text(text = "Hírek",
