@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -46,7 +47,6 @@ import hu.klm60o.spiritrally.useful.validateEmail
 fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
     val viewModel = viewModel
-    val currentUser = Firebase.auth.currentUser
 
     /*if (currentUser != null) {
         getUserDataFromFirestore(
@@ -70,6 +70,26 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
             //Text("Ez itt az eredmények képernyő")
             if (viewModel.racePoints != null) {
                 RacePointListComposable(viewModel.racePoints!!)
+                Divider(
+                    thickness = 2.dp,
+                    modifier = Modifier
+                        .padding(10.dp)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .padding(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Text("Átlagsebesség: ")
+                    }
+                }
             }
             //RacePointListComposable(viewModel.racePoints!!)
         }
@@ -94,7 +114,8 @@ fun RacePointListComposable(racePoints: List<RacePoint>) {
 fun RacePointComposable(racePoint: RacePoint, size: Int) {
     Row(
         modifier = Modifier
-            .padding(5.dp)
+            .padding(5.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         if (racePoint.id == 1) {
             Column(
@@ -159,7 +180,16 @@ fun RacePointComposable(racePoint: RacePoint, size: Int) {
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.End
         ) {
-            Text("Oje")
+            OutlinedTextField(
+                value = "Teszt",
+                onValueChange = {},
+                enabled = false,
+                modifier = Modifier
+                    .width(100.dp),
+                label = {
+                    Text("Időpont")
+                }
+            )
         }
 
 
