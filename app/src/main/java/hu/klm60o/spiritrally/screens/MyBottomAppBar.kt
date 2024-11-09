@@ -1,5 +1,7 @@
 package hu.klm60o.spiritrally.screens
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,24 +25,33 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
+import hu.klm60o.spiritrally.MainActivity
 import hu.klm60o.spiritrally.MapScreen
 import hu.klm60o.spiritrally.NewsScreen
 import hu.klm60o.spiritrally.ProfileScreen
 import hu.klm60o.spiritrally.ResultScreen
 import hu.klm60o.spiritrally.assets.QrCode
 import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
+import hu.klm60o.spiritrally.useful.showToast
 
 @Composable
 fun MyBottomAppbarComposable(navController: NavController) {
     val navController = navController
+    val context = LocalContext.current
     BottomAppBar(
         actions = {
             Column(
@@ -122,7 +133,9 @@ fun MyBottomAppbarComposable(navController: NavController) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    checkCameraPermission(context)
+                },
                 containerColor = BottomAppBarDefaults.containerColor,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
             ) {
@@ -130,6 +143,21 @@ fun MyBottomAppbarComposable(navController: NavController) {
             }
         }
     )
+}
+
+fun checkCameraPermission(context: Context) {
+    if (ContextCompat.checkSelfPermission(
+        context,
+        android.Manifest.permission.CAMERA
+    ) == PackageManager.PERMISSION_GRANTED) {
+            (context as MainActivity).showCamera()
+    }
+    else if (shouldShowRequestPermissionRationale((context as MainActivity), android.Manifest.permission.CAMERA)) {
+        showToast(context, "Endegélyezd a kamera jososultságot a beállításokban")
+    }
+    else {
+        context.requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+    }
 }
 
 @Preview(showBackground = true)

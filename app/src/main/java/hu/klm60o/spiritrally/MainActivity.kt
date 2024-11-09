@@ -3,6 +3,8 @@ package hu.klm60o.spiritrally
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,6 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.screens.MapScreenComposable
 import hu.klm60o.spiritrally.screens.NewsScreenComposable
@@ -26,9 +30,43 @@ import hu.klm60o.spiritrally.screens.RegisterScreenComposable
 import hu.klm60o.spiritrally.screens.ResultScreenComposable
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
+import hu.klm60o.spiritrally.useful.showToast
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
+
+    private var textResult = mutableStateOf("")
+
+    fun showCamera() {
+        val options = ScanOptions()
+        options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+        options.setPrompt("Olvass be egy QR kódot")
+        options.setCameraId(0)
+        options.setBeepEnabled(false)
+        options.setOrientationLocked(false)
+
+        barCodeLauncher.launch(options)
+    }
+
+    private val barCodeLauncher = registerForActivityResult(ScanContract()) {
+            result ->
+        if (result.contents == null) {
+            showToast(this, "Beolvasás visszavonva")
+        }
+        else {
+            textResult.value = result.contents
+        }
+    }
+
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        isGranted ->
+        if (isGranted) {
+            showCamera()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val startDestination: Any
