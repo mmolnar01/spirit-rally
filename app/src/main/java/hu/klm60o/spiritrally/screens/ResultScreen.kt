@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.assets.ErrorIcon
@@ -42,6 +43,8 @@ import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
 import hu.klm60o.spiritrally.useful.validateEmail
+import java.util.Calendar
+import java.util.Date
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
@@ -112,6 +115,13 @@ fun RacePointListComposable(racePoints: List<RacePoint>) {
 
 @Composable
 fun RacePointComposable(racePoint: RacePoint, size: Int) {
+    var racePointCalendar = Calendar.getInstance()
+    val seconds = racePoint.timeStamp?.seconds
+    var timeText = "-"
+    if (seconds != null) {
+        racePointCalendar.timeInMillis = seconds * 1000
+        timeText = racePointCalendar.get(Calendar.HOUR_OF_DAY).toString() + ":" + racePointCalendar.get(Calendar.MINUTE).toString()
+    }
     Row(
         modifier = Modifier
             .padding(5.dp),
@@ -181,7 +191,7 @@ fun RacePointComposable(racePoint: RacePoint, size: Int) {
             horizontalAlignment = Alignment.End
         ) {
             OutlinedTextField(
-                value = "Teszt",
+                value = timeText,
                 onValueChange = {},
                 enabled = false,
                 modifier = Modifier
