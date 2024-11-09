@@ -153,7 +153,8 @@ fun checkCameraPermission(context: Context) {
             (context as MainActivity).showCamera()
     }
     else if (shouldShowRequestPermissionRationale((context as MainActivity), android.Manifest.permission.CAMERA)) {
-        showToast(context, "Endegélyezd a kamera jososultságot a beállításokban")
+        showToast(context, "Kamera jogosultság szükséges")
+        context.requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
     }
     else {
         context.requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
