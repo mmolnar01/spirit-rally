@@ -4,47 +4,28 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
-import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
-import hu.klm60o.spiritrally.useful.validateEmail
 import java.util.Calendar
-import java.util.Date
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
@@ -120,7 +101,13 @@ fun RacePointComposable(racePoint: RacePoint, size: Int) {
     var timeText = "-"
     if (seconds != null) {
         racePointCalendar.timeInMillis = seconds * 1000
-        timeText = racePointCalendar.get(Calendar.HOUR_OF_DAY).toString() + ":" + racePointCalendar.get(Calendar.MINUTE).toString()
+
+        //Lekérdezzük az időt órában és percben
+        if (racePointCalendar.get(Calendar.MINUTE) < 10) {
+            timeText = racePointCalendar.get(Calendar.HOUR_OF_DAY).toString() + ":" + "0" + racePointCalendar.get(Calendar.MINUTE).toString()
+        } else {
+            timeText = racePointCalendar.get(Calendar.HOUR_OF_DAY).toString() + ":" + racePointCalendar.get(Calendar.MINUTE).toString()
+        }
     }
     Row(
         modifier = Modifier

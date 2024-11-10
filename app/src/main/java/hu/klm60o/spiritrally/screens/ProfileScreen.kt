@@ -1,13 +1,8 @@
 package hu.klm60o.spiritrally.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedButton
@@ -26,7 +21,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.data.UserViewModel
-import hu.klm60o.spiritrally.screens.ui.theme.SpiritRallyTheme
 
 @Composable
 fun ProfileScreenComposable(navController: NavController, viewModel: UserViewModel) {

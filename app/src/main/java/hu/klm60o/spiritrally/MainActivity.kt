@@ -18,7 +18,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
@@ -30,12 +33,18 @@ import hu.klm60o.spiritrally.screens.RegisterScreenComposable
 import hu.klm60o.spiritrally.screens.ResultScreenComposable
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
+import hu.klm60o.spiritrally.useful.saveCurrentRaceDataToFirestore
 import hu.klm60o.spiritrally.useful.showToast
 import kotlinx.serialization.Serializable
+import java.util.Calendar
 
 class MainActivity : ComponentActivity() {
 
+    private val viewModel = UserViewModel()
+
     private var textResult = mutableStateOf("")
+
+    private val currentUser = Firebase.auth.currentUser
 
     fun showCamera() {
         val options = ScanOptions()
@@ -51,10 +60,21 @@ class MainActivity : ComponentActivity() {
     private val barCodeLauncher = registerForActivityResult(ScanContract()) {
             result ->
         if (result.contents == null) {
-            showToast(this, "Beolvasás visszavonva")
+            showToast(this, "Beolvasás megszakítve")
         }
         else {
+            //Beolvassuk QR kódot, Int-té alakítjuk és megpróbáljuk beírni a Timestamp-be
             textResult.value = result.contents
+            val textResultInteger = textResult.value.toString().toIntOrNull()
+            if (viewModel.racePoints != null
+                && textResultInteger != null
+                && currentUser != null
+                && viewModel.racePoints!!.size >= textResultInteger
+                && viewModel.racePoints!![textResultInteger].timeStamp == null) {
+                var calendar = Calendar.getInstance()
+                viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
+                saveCurrentRaceDataToFirestore(currentUser, viewModel, this)
+            }
         }
     }
 
@@ -70,7 +90,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val startDestination: Any
-        if(Firebase.auth.currentUser != null) {
+        if(currentUser != null) {
             startDestination = NewsScreen
         } else {
             startDestination = LoginScreen
@@ -80,8 +100,8 @@ class MainActivity : ComponentActivity() {
                 //NavController létrehozása
                 //val ViewModelSaver = Saver<UserViewModel, Any>(save = { it.Any }, restore = { UserViewModel() })
                 //var test by rememberSaveable { mutableStateOf(UserViewModel()) }
-                var viewModel = UserViewModel()
-                val currentUser = Firebase.auth.currentUser
+                //var viewModel = UserViewModel()
+                //val currentUser = Firebase.auth.currentUser
                 if (currentUser != null) {
                     getUserDataFromFirestore(
                         currentUser = currentUser,

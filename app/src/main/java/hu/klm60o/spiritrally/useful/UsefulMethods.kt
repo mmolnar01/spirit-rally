@@ -108,12 +108,21 @@ fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel
     }
 }
 
-fun saveCurrentRaceDataToFirestore(viewModel: UserViewModel) {
-    val currentUser = Firebase.auth.currentUser
-    var documentReference: DocumentReference
-
+fun saveCurrentRaceDataToFirestore(currentUser: FirebaseUser, viewModel: UserViewModel, context: Context) {
     if (currentUser != null) {
+        val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
+            .collection("my_race_results").document("my_race_results_current")
 
+        userDocumentReference.set(viewModel).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(ContentValues.TAG, "Created user document: Success")
+                showToast(context, "A dokumentum sikeresen létrehozva")
+            }
+            else {
+                Log.d(ContentValues.TAG, "Created user document: Failure")
+                showToast(context, "A dokumentum létrehozása sikertelen")
+            }
+        }
     }
 }
 
