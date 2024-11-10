@@ -12,6 +12,7 @@ class UserViewModel : ViewModel() {
     var teamName: String? = null
     var distance: Int? = null
     var racePoints: List<RacePoint>? = null
+    //var racePoints = mutableStateListOf<RacePoint>()
 
     //var test by mutableStateOf("")
 

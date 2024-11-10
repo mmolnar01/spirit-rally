@@ -29,7 +29,7 @@ import hu.klm60o.spiritrally.data.UserViewModel
 import java.util.Calendar
 
 @Composable
-fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel = viewModel()) {
+fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
     //val viewModel = viewModel
 
