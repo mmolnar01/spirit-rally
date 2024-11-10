@@ -18,7 +18,7 @@ import hu.klm60o.spiritrally.data.UserViewModel
 @Composable
 fun NewsScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
-    val viewModel = viewModel
+    //al viewModel = viewModel
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) }
     ) {

@@ -64,7 +64,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
     var validPasswordRepeat = true
     val navController = navController
     val context = LocalContext.current
-    val viewModel = viewModel
+    //val viewModel = viewModel
     Surface {
         //Változók a felhasználói input elátrolására
         val userEmail = remember {

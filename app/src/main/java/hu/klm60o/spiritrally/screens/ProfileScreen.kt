@@ -25,7 +25,7 @@ import hu.klm60o.spiritrally.data.UserViewModel
 @Composable
 fun ProfileScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
-    val viewModel = viewModel
+    //val viewModel = viewModel
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) }
     ) {

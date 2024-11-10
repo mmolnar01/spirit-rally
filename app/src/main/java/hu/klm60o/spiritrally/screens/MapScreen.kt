@@ -27,7 +27,7 @@ import org.osmdroid.util.GeoPoint
 @Composable
 fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) {
     val navController = navController
-    val viewModel = viewModel
+    //val viewModel = viewModel
     /*val cameraState = rememberCameraState {
         geoPoint = GeoPoint(47.46274418232391, 19.041552309632305)
         zoom = 12.0 // optional, default is 5.0

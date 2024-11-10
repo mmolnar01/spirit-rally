@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -40,7 +41,7 @@ import java.util.Calendar
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel = UserViewModel()
+    private val viewModel by viewModels<UserViewModel>()
 
     private var textResult = mutableStateOf("")
 
@@ -71,9 +72,10 @@ class MainActivity : ComponentActivity() {
                 && currentUser != null
                 && viewModel.racePoints!!.size >= textResultInteger
                 && viewModel.racePoints!![textResultInteger].timeStamp == null) {
-                var calendar = Calendar.getInstance()
-                viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
-                saveCurrentRaceDataToFirestore(currentUser, viewModel, this)
+                    var calendar = Calendar.getInstance()
+                    viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
+                    //viewModel.racePointsMutable[textResultInteger].timeStamp = Timestamp(calendar.time)
+                    saveCurrentRaceDataToFirestore(currentUser, viewModel, this)
             }
         }
     }

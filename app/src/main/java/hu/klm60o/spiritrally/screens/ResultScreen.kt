@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.data.RacePoint
@@ -28,9 +29,9 @@ import hu.klm60o.spiritrally.data.UserViewModel
 import java.util.Calendar
 
 @Composable
-fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
+fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel = viewModel()) {
     val navController = navController
-    val viewModel = viewModel
+    //val viewModel = viewModel
 
     /*if (currentUser != null) {
         getUserDataFromFirestore(

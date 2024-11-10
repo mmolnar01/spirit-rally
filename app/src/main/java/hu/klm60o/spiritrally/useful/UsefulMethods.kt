@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.userProfileChangeRequest
@@ -60,6 +61,7 @@ fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel
                 val userRaceData = document.toObject(UserViewModel::class.java)
                 viewModel.distance = userRaceData?.distance
                 viewModel.racePoints = userRaceData?.racePoints
+                //viewModel.racePointsMutable.addAll(userRaceData?.racePoints!!)
                 viewModel.teamName = userRaceData?.teamName
                 showToast(context, "Adatok betöltve!")
 
@@ -88,6 +90,8 @@ fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel
                                 racePoints.add(RacePoint(i, currentRaceData?.end_point, null))
 
                                 viewModel.racePoints = racePoints
+
+                                //viewModel.racePointsMutable.addAll(racePoints)
 
                                 viewModel.teamName = currentUser.displayName
 
