@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.MainActivity
@@ -118,9 +120,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 IconButton(onClick = {
                     navController.navigate(ProfileScreen)
                 }) {
-                    Icon(Icons.Filled.Person, contentDescription = "Profile screen", modifier = Modifier.background(Color.Red,
-                        CircleShape
-                    ))
+                    Icon(Icons.Filled.Person, contentDescription = "Profile screen")
                 }
                 Text(text = "Profil",
                     modifier = Modifier
