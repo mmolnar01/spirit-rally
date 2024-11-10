@@ -111,4 +111,7 @@ dependencies {
 
     //ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
+
+    //Location
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }

@@ -1,6 +1,7 @@
 package hu.klm60o.spiritrally.screens
 
 import android.Manifest
+import android.R
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import hu.klm60o.spiritrally.LoginScreen
 import hu.klm60o.spiritrally.MainActivity
 import hu.klm60o.spiritrally.MapScreen
 import hu.klm60o.spiritrally.NewsScreen
@@ -138,18 +140,46 @@ fun MyBottomAppbarComposable(navController: NavController) {
 }
 
 fun checkCameraPermission(context: Context) {
-    if (ContextCompat.checkSelfPermission(
+    if ((ContextCompat.checkSelfPermission(
         context,
         Manifest.permission.CAMERA
-    ) == PackageManager.PERMISSION_GRANTED) {
+    ) == PackageManager.PERMISSION_GRANTED)
+        && (ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED)
+    ) {
             (context as MainActivity).showCamera()
     }
     else if (shouldShowRequestPermissionRationale((context as MainActivity), Manifest.permission.CAMERA)) {
         showToast(context, "Kamera jogosultság szükséges")
-        context.requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        //context.requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        context.requestPermissionLauncher2.launch(
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        )
+    }
+    else if (shouldShowRequestPermissionRationale((context as MainActivity), Manifest.permission.ACCESS_FINE_LOCATION)) {
+        showToast(context, "Helymeghatározás jogosultság szükséges")
+        //context.requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        context.requestPermissionLauncher2.launch(
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        )
     }
     else {
-        context.requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        //context.requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        //context.requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        context.requestPermissionLauncher2.launch(
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        )
     }
 }
 

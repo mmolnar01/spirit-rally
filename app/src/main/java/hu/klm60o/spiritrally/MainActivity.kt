@@ -1,5 +1,7 @@
 package hu.klm60o.spiritrally
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +21,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -47,6 +51,12 @@ class MainActivity : ComponentActivity() {
 
     private val currentUser = Firebase.auth.currentUser
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private fun getLastLocation() {
+
+    }
+
     fun showCamera() {
         val options = ScanOptions()
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
@@ -58,6 +68,7 @@ class MainActivity : ComponentActivity() {
         barCodeLauncher.launch(options)
     }
 
+    @SuppressLint("MissingPermission")
     private val barCodeLauncher = registerForActivityResult(ScanContract()) {
             result ->
         if (result.contents == null) {
@@ -67,6 +78,14 @@ class MainActivity : ComponentActivity() {
             //Beolvassuk QR kódot, Int-té alakítjuk és megpróbáljuk beírni a Timestamp-be
             textResult.value = result.contents
             val textResultInteger = textResult.value.toString().toIntOrNull()
+            val lastLocation = fusedLocationClient.getLastLocation()
+
+            lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    showToast(this, it.latitude.toString() + " " + it.longitude.toString())
+                }
+            }
+
             if (viewModel.racePoints != null
                 && textResultInteger != null
                 && currentUser != null
@@ -80,17 +99,27 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    val requestPermissionLauncher = registerForActivityResult(
+    /*val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
         isGranted ->
         if (isGranted) {
             showCamera()
         }
+    }*/
+
+    val requestPermissionLauncher2 = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        permissions ->
+        if (!permissions.containsValue(false)) {
+            showCamera()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val startDestination: Any
         if(currentUser != null) {
             startDestination = NewsScreen
