@@ -2,6 +2,7 @@ package hu.klm60o.spiritrally
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -53,9 +54,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private fun getLastLocation() {
-
-    }
+    private fun Location.checkIsInBound(radius: Double, center: Location): Boolean = this.distanceTo(center)<radius
 
     fun showCamera() {
         val options = ScanOptions()
@@ -78,23 +77,23 @@ class MainActivity : ComponentActivity() {
             //Beolvassuk QR kódot, Int-té alakítjuk és megpróbáljuk beírni a Timestamp-be
             textResult.value = result.contents
             val textResultInteger = textResult.value.toString().toIntOrNull()
-            val lastLocation = fusedLocationClient.getLastLocation()
 
-            lastLocation.addOnSuccessListener {
-                if (it != null) {
-                    showToast(this, it.latitude.toString() + " " + it.longitude.toString())
+            if (viewModel.racePoints != null && textResultInteger != null && currentUser != null && viewModel.racePoints!!.size >= textResultInteger && viewModel.racePoints!![textResultInteger].timeStamp == null) {
+                val currentLocation = fusedLocationClient.lastLocation
+                currentLocation.addOnSuccessListener {
+                    val racePointLocation = Location("Test")
+                    racePointLocation.latitude = viewModel.racePoints!![textResultInteger].location?.latitude!!
+                    racePointLocation.longitude = viewModel.racePoints!![textResultInteger].location?.longitude!!
+                    if (it?.checkIsInBound(100.0, racePointLocation) == true) {
+                        showToast(this, "Jó helyen vagy :)")
+                        var calendar = Calendar.getInstance()
+                        viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
+                        saveCurrentRaceDataToFirestore(currentUser, viewModel, this)
+                    }
+                    else {
+                        showToast(this, "Sajnos rossz helyen vagy :(")
+                    }
                 }
-            }
-
-            if (viewModel.racePoints != null
-                && textResultInteger != null
-                && currentUser != null
-                && viewModel.racePoints!!.size >= textResultInteger
-                && viewModel.racePoints!![textResultInteger].timeStamp == null) {
-                    var calendar = Calendar.getInstance()
-                    viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
-                    //viewModel.racePointsMutable[textResultInteger].timeStamp = Timestamp(calendar.time)
-                    saveCurrentRaceDataToFirestore(currentUser, viewModel, this)
             }
         }
     }

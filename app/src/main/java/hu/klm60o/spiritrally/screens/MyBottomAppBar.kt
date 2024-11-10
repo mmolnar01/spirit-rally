@@ -4,10 +4,12 @@ import android.Manifest
 import android.R
 import android.content.Context
 import android.content.pm.PackageManager
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Home
@@ -23,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -115,7 +118,9 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 IconButton(onClick = {
                     navController.navigate(ProfileScreen)
                 }) {
-                    Icon(Icons.Filled.Person, contentDescription = "Profile screen")
+                    Icon(Icons.Filled.Person, contentDescription = "Profile screen", modifier = Modifier.background(Color.Red,
+                        CircleShape
+                    ))
                 }
                 Text(text = "Profil",
                     modifier = Modifier
@@ -129,6 +134,8 @@ fun MyBottomAppbarComposable(navController: NavController) {
             FloatingActionButton(
                 onClick = {
                     checkCameraPermission(context)
+                    navController.navigate(NewsScreen)
+                    navController.navigate(ResultScreen)
                 },
                 containerColor = BottomAppBarDefaults.containerColor,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
