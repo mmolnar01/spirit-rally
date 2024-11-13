@@ -1,8 +1,7 @@
-package hu.klm60o.spiritrally
+package hu.klm60o.spiritrally.screens
 
 import android.content.ContentValues
 import android.util.Log
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +18,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,22 +35,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import hu.klm60o.spiritrally.NewsScreen
 import hu.klm60o.spiritrally.R
+import hu.klm60o.spiritrally.RegisterScreen
 import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.data.CurrentRaceData
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.loginUSer
-import hu.klm60o.spiritrally.useful.registerUser
 import hu.klm60o.spiritrally.useful.showToast
 import hu.klm60o.spiritrally.useful.validateEmail
 import hu.klm60o.spiritrally.useful.validatePassword
@@ -101,6 +97,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                 userEmail.value = it
                 validEmail = validateEmail(userEmail.value)
             },
+                isError = !validEmail,
                 supportingText = {
                     if(!validEmail) {
                         Text(
@@ -132,6 +129,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                 userPassword.value = it
                 validPaswword = validatePassword(userPassword.value)
             },
+                isError = !validPaswword,
                 supportingText = {
                     if(!validPaswword) {
                         Text(
@@ -223,7 +221,9 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                                                                     showToast(context, "A dokumentum sikeresen létrehozva")
 
                                                                     showToast(context, "Sikeres bejelentkezés!")
-                                                                    navController.navigate(NewsScreen) {
+                                                                    navController.navigate(
+                                                                        NewsScreen
+                                                                    ) {
                                                                         popUpTo(navController.graph.id) {
                                                                             inclusive = true
                                                                         }

@@ -1,25 +1,18 @@
 package hu.klm60o.spiritrally
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,12 +20,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import hu.klm60o.spiritrally.data.UserViewModel
+import hu.klm60o.spiritrally.screens.LoginScreenComposable
 import hu.klm60o.spiritrally.screens.MapScreenComposable
 import hu.klm60o.spiritrally.screens.NewsScreenComposable
 import hu.klm60o.spiritrally.screens.ProfileScreenComposable
@@ -42,9 +34,7 @@ import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
 import hu.klm60o.spiritrally.useful.saveCurrentRaceDataToFirestore
 import hu.klm60o.spiritrally.useful.showToast
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
-import org.osmdroid.views.overlay.Polyline
 import java.util.Calendar
 
 class MainActivity : ComponentActivity() {

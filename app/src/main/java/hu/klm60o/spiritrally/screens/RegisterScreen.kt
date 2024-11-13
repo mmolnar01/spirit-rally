@@ -110,6 +110,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 userEmail.value = it
                 validEmail = validateEmail(userEmail.value)
             },
+                isError = !validEmail,
                 supportingText = {
                     if(!validEmail) {
                         Text(
@@ -159,6 +160,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 userPassword.value = it
                 validPaswword = validatePassword(userPassword.value)
             },
+                isError = !validPaswword,
                 supportingText = {
                     if(!validPaswword) {
                         Text(
@@ -191,6 +193,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 userPasswordRepeat.value = it
                 validPasswordRepeat = validatePasswordRepeat(userPassword.value, userPasswordRepeat.value)
             },
+                isError = !validPasswordRepeat,
                 supportingText = {
                     if(!validPasswordRepeat) {
                         Text(

@@ -60,12 +60,11 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
 
     val context = LocalContext.current
     val parser = GPXParser()
-    var geoPoints: MutableList<GeoPoint> = ArrayList<GeoPoint>()
+    val geoPoints: MutableList<GeoPoint> = ArrayList<GeoPoint>()
     try {
         val input: InputStream = context.assets.open("test.gpx")
         val parsedGpx = parser.parse(input)
         parsedGpx?.let {
-            showToast(context, "BLA")
             parsedGpx.tracks.forEach {
                 it.trackSegments.forEach {
                     it.trackPoints.forEach {
