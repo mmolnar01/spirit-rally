@@ -19,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,7 +42,9 @@ import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
 import hu.klm60o.spiritrally.useful.saveCurrentRaceDataToFirestore
 import hu.klm60o.spiritrally.useful.showToast
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import org.osmdroid.views.overlay.Polyline
 import java.util.Calendar
 
 class MainActivity : ComponentActivity() {
@@ -118,7 +121,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         val startDestination: Any
         if(currentUser != null) {
             startDestination = NewsScreen

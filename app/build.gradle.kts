@@ -104,6 +104,10 @@ dependencies {
     //OpenStreetMap
     implementation("org.osmdroid:osmdroid-android:6.1.20")
     implementation("tech.utsmankece:osm-android-compose:0.0.5")
+    //OpenStreetMap Bonus Pack
+    implementation("com.github.MKergall:osmbonuspack:6.9.0")
+    //GPX Parser
+    implementation("com.github.ticofab:android-gpx-parser:2.3.1")
 
     //Zxing
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
