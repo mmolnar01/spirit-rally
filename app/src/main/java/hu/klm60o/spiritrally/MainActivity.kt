@@ -31,8 +31,6 @@ import hu.klm60o.spiritrally.screens.ProfileScreenComposable
 import hu.klm60o.spiritrally.screens.RegisterScreenComposable
 import hu.klm60o.spiritrally.screens.ResultScreenComposable
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
-import hu.klm60o.spiritrally.useful.getUserDataFromFirestore
-import hu.klm60o.spiritrally.useful.saveCurrentRaceDataToFirestore
 import hu.klm60o.spiritrally.useful.showToast
 import kotlinx.serialization.Serializable
 import java.util.Calendar
@@ -81,7 +79,7 @@ class MainActivity : ComponentActivity() {
                         showToast(this, "Jó helyen vagy :)")
                         var calendar = Calendar.getInstance()
                         viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
-                        saveCurrentRaceDataToFirestore(currentUser, viewModel, this)
+                        viewModel.saveCurrentRaceDataToFirestore(currentUser, this)
                     }
                     else {
                         showToast(this, "Sajnos rossz helyen vagy :(")
@@ -128,9 +126,8 @@ class MainActivity : ComponentActivity() {
                 //var viewModel = UserViewModel()
                 //val currentUser = Firebase.auth.currentUser
                 if (currentUser != null) {
-                    getUserDataFromFirestore(
+                    viewModel.getUserDataFromFirestore(
                         currentUser = currentUser,
-                        viewModel = viewModel,
                         context = LocalContext.current
                     )
                 }

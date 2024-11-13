@@ -50,12 +50,7 @@ import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
-import hu.klm60o.spiritrally.useful.registerUser
-import hu.klm60o.spiritrally.useful.setDisplayName
 import hu.klm60o.spiritrally.useful.showToast
-import hu.klm60o.spiritrally.useful.validateEmail
-import hu.klm60o.spiritrally.useful.validatePassword
-import hu.klm60o.spiritrally.useful.validatePasswordRepeat
 
 @Composable
 fun RegisterScreenComposable(navController: NavController, viewModel: UserViewModel) {
@@ -108,7 +103,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
             //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
-                validEmail = validateEmail(userEmail.value)
+                validEmail = viewModel.validateEmail(userEmail.value)
             },
                 isError = !validEmail,
                 supportingText = {
@@ -158,7 +153,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
             //Jelszó bemeneti mező
             OutlinedTextField(value = userPassword.value, onValueChange = {
                 userPassword.value = it
-                validPaswword = validatePassword(userPassword.value)
+                validPaswword = viewModel.validatePassword(userPassword.value)
             },
                 isError = !validPaswword,
                 supportingText = {
@@ -191,7 +186,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
             //Jelszó újra bemeneti mező
             OutlinedTextField(value = userPasswordRepeat.value, onValueChange = {
                 userPasswordRepeat.value = it
-                validPasswordRepeat = validatePasswordRepeat(userPassword.value, userPasswordRepeat.value)
+                validPasswordRepeat = viewModel.validatePasswordRepeat(userPassword.value, userPasswordRepeat.value)
             },
                 isError = !validPasswordRepeat,
                 supportingText = {
@@ -224,11 +219,11 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
             //Regisztrálás gomb
             ElevatedButton (onClick = {
                 if(validEmail && validPaswword && validPasswordRepeat) {
-                    registerUser(userEmail.value, userPassword.value) { error ->
+                    viewModel.registerUser(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             showToast(context, "Sikeres regisztráció. Kérlek erősítsd meg az Email címedet!")
 
-                            setDisplayName(userTeamName.value)
+                            viewModel.setDisplayName(userTeamName.value)
 
                             Firebase.auth.currentUser?.sendEmailVerification()
                             Firebase.auth.signOut()

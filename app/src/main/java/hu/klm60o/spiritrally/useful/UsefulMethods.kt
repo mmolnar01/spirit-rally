@@ -23,27 +23,27 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Polyline
 
-fun validateEmail(email: String): Boolean {
+/*fun validateEmail(email: String): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-}
+}*/
 
-fun validatePassword(password: String): Boolean {
+/*fun validatePassword(password: String): Boolean {
     return password.length >= 5
-}
+}*/
 
-fun validatePasswordRepeat(password: String, passwordRepeat: String): Boolean {
+/*fun validatePasswordRepeat(password: String, passwordRepeat: String): Boolean {
     return password.equals(passwordRepeat)
-}
+}*/
 
-fun registerUser(email: String, password: String, onResult: (Throwable?) -> Unit) {
+/*fun registerUser(email: String, password: String, onResult: (Throwable?) -> Unit) {
     Firebase.auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { onResult(it.exception) }
-}
+}*/
 
-fun loginUSer(email: String, password: String, onResult: (Throwable?) -> Unit) {
+/*fun loginUSer(email: String, password: String, onResult: (Throwable?) -> Unit) {
     Firebase.auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { onResult(it.exception) }
-}
+}*/
 
 fun showToast(context: Context, msg: String) {
     Toast.makeText(
@@ -53,7 +53,7 @@ fun showToast(context: Context, msg: String) {
     ).show()
 }
 
-fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel, context: Context) {
+/*fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel, context: Context) {
     //Lekérdezzük a bejlentkezett felhasználó eredményeit
     val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
         .collection("my_race_results").document("my_race_results_current")
@@ -116,9 +116,9 @@ fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel
             }
         }
     }
-}
+}*/
 
-fun saveCurrentRaceDataToFirestore(currentUser: FirebaseUser, viewModel: UserViewModel, context: Context) {
+/*fun saveCurrentRaceDataToFirestore(currentUser: FirebaseUser, viewModel: UserViewModel, context: Context) {
     if (currentUser != null) {
         val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
             .collection("my_race_results").document("my_race_results_current")
@@ -134,9 +134,9 @@ fun saveCurrentRaceDataToFirestore(currentUser: FirebaseUser, viewModel: UserVie
             }
         }
     }
-}
+}*/
 
-fun setDisplayName(name: String) {
+/*fun setDisplayName(name: String) {
     val user = Firebase.auth.currentUser
 
     val profileUpdates = userProfileChangeRequest {
@@ -149,4 +149,4 @@ fun setDisplayName(name: String) {
                 Log.d(TAG, "User profile updated.")
             }
         }
-}
+}*/

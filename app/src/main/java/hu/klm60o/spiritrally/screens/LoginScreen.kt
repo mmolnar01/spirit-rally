@@ -48,10 +48,7 @@ import hu.klm60o.spiritrally.data.CurrentRaceData
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
-import hu.klm60o.spiritrally.useful.loginUSer
 import hu.klm60o.spiritrally.useful.showToast
-import hu.klm60o.spiritrally.useful.validateEmail
-import hu.klm60o.spiritrally.useful.validatePassword
 
 @Composable
 fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel) {
@@ -95,7 +92,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
             //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
-                validEmail = validateEmail(userEmail.value)
+                validEmail = viewModel.validateEmail(userEmail.value)
             },
                 isError = !validEmail,
                 supportingText = {
@@ -127,7 +124,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
             //Jelszó bemeneti mező
             OutlinedTextField(value = userPassword.value, onValueChange = {
                 userPassword.value = it
-                validPaswword = validatePassword(userPassword.value)
+                validPaswword = viewModel.validatePassword(userPassword.value)
             },
                 isError = !validPaswword,
                 supportingText = {
@@ -160,7 +157,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
             //Bejelentkezés gomb
             ElevatedButton(onClick = {
                 if(validEmail && validPaswword) {
-                    loginUSer(userEmail.value, userPassword.value) { error ->
+                    viewModel.loginUSer(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             val currentUser = Firebase.auth.currentUser
                             if(currentUser?.isEmailVerified == true) {
