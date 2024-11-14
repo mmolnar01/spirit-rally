@@ -31,6 +31,7 @@ import com.utsman.osmandcompose.Marker
 import com.utsman.osmandcompose.OpenStreetMap
 import com.utsman.osmandcompose.Polyline
 import com.utsman.osmandcompose.rememberMarkerState
+import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.useful.showToast
 import io.ticofab.androidgpxparser.parser.GPXParser
@@ -88,7 +89,8 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
 
 
     val depokIcon: Drawable? by remember {
-        mutableStateOf(context.getDrawable(org.osmdroid.library.R.drawable.marker_default))
+        //mutableStateOf(context.getDrawable(org.osmdroid.library.R.drawable.marker_default))
+        mutableStateOf(context.getDrawable(R.drawable.map_marker_red))
     }
 
     val geoPoint = remember {
@@ -139,10 +141,17 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
                 modifier = Modifier.fillMaxSize(),
                 cameraState = cameraState
             ) {
-                Marker(
+                viewModel.racePoints?.forEach { racePoint ->
+                    //testMarkerState.geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)
+                    Marker(
+                        state = rememberMarkerState(geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)),
+                        icon = depokIcon
+                    )
+                }
+                /*Marker(
                     state = testMarkerState,
                     icon = depokIcon
-                )
+                )*/
                 com.utsman.osmandcompose.Polyline(
                     geoPoints = geoPoints,
                     color = Color.Blue
