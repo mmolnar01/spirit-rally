@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
 
                         //A rajtot és a célt nem kell beleszámolni a teljesített elennörző pontokba
-                        if (textResultInteger != 0 || textResultInteger != viewModel.racePoints!!.size) {
+                        if (textResultInteger != 0 && textResultInteger != viewModel.racePoints!!.size) {
                             viewModel.achievedRacePoints += 1
                         }
 

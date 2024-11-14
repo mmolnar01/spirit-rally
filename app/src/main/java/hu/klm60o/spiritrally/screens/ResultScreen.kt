@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.firestore.GeoPoint
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
+import hu.klm60o.spiritrally.useful.showToast
 import java.util.Calendar
 
 @Composable
@@ -130,7 +132,15 @@ fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text("Átlagsebesség: ")
+                    if (racePoints.last().timeStamp != null && racePoints.first().timeStamp != null) {
+                        val endTimeStamp = racePoints.last().timeStamp!!.seconds
+                        val startTimeStamp = racePoints.first().timeStamp!!.seconds
+                        val timeTaken = ((endTimeStamp - startTimeStamp).toDouble()) / 3600
+                        showToast(LocalContext.current, timeTaken.toString())
+                        Text("Átlagsebesség: " + (distance / timeTaken).toString() + " km/h")
+                    } else {
+                        Text("Átlagsebesség: ")
+                    }
                 }
             }
         }
