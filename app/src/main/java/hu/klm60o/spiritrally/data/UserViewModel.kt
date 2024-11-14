@@ -25,9 +25,10 @@ class UserViewModel : ViewModel() {
     var teamName: String? = null
     var distance: Int? = null
     var racePoints: List<RacePoint>? = null
+    var achievedRacePoints: Int = 0
 
-    @get:Exclude
-    lateinit var navController: NavController
+    //@get:Exclude
+    //lateinit var navController: NavController
     //var racePoints = mutableStateListOf<RacePoint>()
 
     //var test by mutableStateOf("")

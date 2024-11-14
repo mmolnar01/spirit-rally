@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Divider
@@ -24,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.firestore.GeoPoint
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import java.util.Calendar
@@ -54,27 +58,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
         ) {
             //Text("Ez itt az eredmények képernyő")
             if (viewModel.racePoints != null) {
-                RacePointListComposable(viewModel.racePoints!!)
-                Divider(
-                    thickness = 2.dp,
-                    modifier = Modifier
-                        .padding(10.dp)
-                )
-
-                Row(
-                    modifier = Modifier
-                        .padding(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Text("Átlagsebesség: ")
-                    }
-                }
+                RacePointListComposable(viewModel.racePoints!!, viewModel.distance!!, viewModel.achievedRacePoints)
             }
             //RacePointListComposable(viewModel.racePoints!!)
         }
@@ -83,7 +67,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
 }
 
 @Composable
-fun RacePointListComposable(racePoints: List<RacePoint>) {
+fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved: Int) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -91,6 +75,64 @@ fun RacePointListComposable(racePoints: List<RacePoint>) {
     ) {
         items(racePoints, key = { racePoint -> racePoint.id!! }) { racePoint ->
             RacePointComposable(racePoint, racePoints.size)
+        }
+        item {
+            Divider(
+                thickness = 2.dp,
+                modifier = Modifier
+                    .padding(10.dp)
+            )
+        }
+
+        item {
+            Row(
+                modifier = Modifier
+                    .padding(5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text("A verseny távolsága: " + distance.toString() + " km")
+                }
+            }
+        }
+
+        item {
+            Row(
+                modifier = Modifier
+                    .padding(5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text("Ellenörző pontok: " + achieved.toString() + " / " + (racePoints.size - 2).toString())
+                }
+            }
+        }
+
+        item {
+            Row(
+                modifier = Modifier
+                    .padding(5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text("Átlagsebesség: ")
+                }
+            }
         }
     }
 }
@@ -197,10 +239,21 @@ fun RacePointComposable(racePoint: RacePoint, size: Int) {
 @Preview(showBackground = true)
 @Composable
 fun ResultPreview() {
+    val racePoint1 = RacePoint(1, GeoPoint(1.0, 1.0))
+    val racePoint2 = RacePoint(2, GeoPoint(1.0, 1.0))
+    val racePoint3 = RacePoint(3, GeoPoint(1.0, 1.0))
+    val racePoint4 = RacePoint(4, GeoPoint(1.0, 1.0))
+    val racePoint5 = RacePoint(5, GeoPoint(1.0, 1.0))
+    val racePoint6 = RacePoint(6, GeoPoint(1.0, 1.0))
+    val racePoint7 = RacePoint(7, GeoPoint(1.0, 1.0))
+    val racePointsListTest: List<RacePoint> = listOf(racePoint1, racePoint2, racePoint3, racePoint4, racePoint5, racePoint6, racePoint7)
+    val viewModelTest = UserViewModel()
+    viewModelTest.racePoints = racePointsListTest
+    viewModelTest.distance = 100
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         ResultScreenComposable(
             navController = rememberNavController(),
-            viewModel =  UserViewModel()
+            viewModel =  viewModelTest
         )
     }
 }

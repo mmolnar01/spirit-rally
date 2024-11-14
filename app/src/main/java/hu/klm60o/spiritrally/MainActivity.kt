@@ -71,14 +71,26 @@ class MainActivity : ComponentActivity() {
 
             if (viewModel.racePoints != null && textResultInteger != null && currentUser != null && viewModel.racePoints!!.size >= textResultInteger && viewModel.racePoints!![textResultInteger].timeStamp == null) {
                 val currentLocation = fusedLocationClient.lastLocation
+
                 currentLocation.addOnSuccessListener {
+
                     val racePointLocation = Location("Test")
+
                     racePointLocation.latitude = viewModel.racePoints!![textResultInteger].location?.latitude!!
                     racePointLocation.longitude = viewModel.racePoints!![textResultInteger].location?.longitude!!
+
                     if (it?.checkIsInBound(100.0, racePointLocation) == true) {
                         showToast(this, "Jó helyen vagy :)")
-                        var calendar = Calendar.getInstance()
+
+                        val calendar = Calendar.getInstance()
+
                         viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
+
+                        //A rajtot és a célt nem kell beleszámolni a teljesített elennörző pontokba
+                        if (textResultInteger != 0 || textResultInteger != viewModel.racePoints!!.size) {
+                            viewModel.achievedRacePoints += 1
+                        }
+
                         viewModel.saveCurrentRaceDataToFirestore(currentUser, this)
                     }
                     else {
