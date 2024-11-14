@@ -128,7 +128,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 15.dp, 0.dp, 0.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
@@ -147,7 +147,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .padding(0.dp, 5.dp, 0.dp, 0.dp)
             )
 
             //Jelszó bemeneti mező
@@ -178,7 +178,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 5.dp, 0.dp, 0.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
@@ -211,7 +211,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 5.dp, 0.dp, 0.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
@@ -242,7 +242,7 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
                 elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp)) {
+                    .padding(0.dp, 15.dp, 0.dp, 0.dp)) {
                 Text(text = "Regisztráció",
                     modifier = Modifier
                         .fillMaxWidth()

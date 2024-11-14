@@ -65,11 +65,11 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
         val input: InputStream = context.assets.open("test.gpx")
         val parsedGpx = parser.parse(input)
         parsedGpx?.let {
-            parsedGpx.tracks.forEach {
-                it.trackSegments.forEach {
-                    it.trackPoints.forEach {
+            parsedGpx.tracks.forEach { track ->
+                track.trackSegments.forEach { trackSegment ->
+                    trackSegment.trackPoints.forEach { trackPoint ->
                         //Log.d(ContentValues.TAG, it.latitude.toString())
-                        geoPoints.add(GeoPoint(it.latitude, it.longitude))
+                        geoPoints.add(GeoPoint(trackPoint.latitude, trackPoint.longitude))
                     }
                 }
             }

@@ -5,7 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,28 +40,59 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserViewMod
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxHeight()
-                .fillMaxWidth()
                 .padding(innerPadding)
         ) {
-            Text("Ez itt a profil képernyő")
-            OutlinedButton(onClick = {
-                Firebase.auth.signOut()
-                navController.navigate(LoginScreen) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
-            },
+            Column(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp)) {
-                Text(text = "Kijelentkezés",
+                    .fillMaxHeight()
+                    .padding(20.dp)
+            ) {
+                Icon(Icons.Filled.Person, contentDescription = "Profile Icon",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(5.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp
+                        .padding(10.dp)
+                        .size(75.dp))
+
+                OutlinedTextField(value = Firebase.auth.currentUser?.email.toString(), onValueChange = {},
+                    label = {
+                        Text("Email cím")
+                    },
+                    readOnly = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
                 )
+
+                OutlinedTextField(value = Firebase.auth.currentUser?.displayName.toString(), onValueChange = {},
+                    label = {
+                        Text("Csapatnév")
+                    },
+                    readOnly = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                )
+
+                OutlinedButton(onClick = {
+                    Firebase.auth.signOut()
+                    navController.navigate(LoginScreen) {
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                    }
+                },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)) {
+                    Text(text = "Kijelentkezés",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp
+                    )
+                }
             }
         }
 

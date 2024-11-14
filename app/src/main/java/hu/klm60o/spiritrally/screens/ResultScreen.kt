@@ -36,8 +36,6 @@ import java.util.Calendar
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
-    val navController = navController
-    //val viewModel = viewModel
 
     /*if (currentUser != null) {
         getUserDataFromFirestore(
@@ -136,7 +134,6 @@ fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved
                         val endTimeStamp = racePoints.last().timeStamp!!.seconds
                         val startTimeStamp = racePoints.first().timeStamp!!.seconds
                         val timeTaken = ((endTimeStamp - startTimeStamp).toDouble()) / 3600
-                        showToast(LocalContext.current, timeTaken.toString())
                         Text("Átlagsebesség: " + (distance / timeTaken).toString() + " km/h")
                     } else {
                         Text("Átlagsebesség: ")
@@ -233,7 +230,7 @@ fun RacePointComposable(racePoint: RacePoint, size: Int) {
             OutlinedTextField(
                 value = timeText,
                 onValueChange = {},
-                enabled = false,
+                readOnly = true,
                 modifier = Modifier
                     .width(100.dp),
                 label = {

@@ -26,6 +26,7 @@ class UserViewModel : ViewModel() {
     var distance: Int? = null
     var racePoints: List<RacePoint>? = null
     var achievedRacePoints: Int = 0
+    //var averageSpeed: Double = 0.0
 
     //@get:Exclude
     //lateinit var navController: NavController
