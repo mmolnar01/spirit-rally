@@ -23,6 +23,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
+import hu.klm60o.spiritrally.data.NewsViewModel
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.screens.LoginScreenComposable
 import hu.klm60o.spiritrally.screens.MapScreenComposable
@@ -38,6 +39,8 @@ import java.util.Calendar
 class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<UserViewModel>()
+
+    private lateinit var newsViewModel: NewsViewModel
 
     private var textResult = mutableStateOf("")
 
@@ -142,6 +145,7 @@ class MainActivity : ComponentActivity() {
                         currentUser = currentUser,
                         context = LocalContext.current
                     )
+                    newsViewModel = NewsViewModel()
                 }
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = startDestination) {
@@ -166,7 +170,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            NewsScreenComposable(navController = navController, viewModel = viewModel)
+                            NewsScreenComposable(navController = navController, viewModel = viewModel, newsViewModel = newsViewModel)
                         }
                     }
                     composable<MapScreen> {

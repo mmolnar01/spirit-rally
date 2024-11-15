@@ -85,6 +85,7 @@ class UserViewModel : ViewModel() {
                     racePoints = userRaceData?.racePoints
                     //viewModel.racePointsMutable.addAll(userRaceData?.racePoints!!)
                     teamName = userRaceData?.teamName
+                    achievedRacePoints = userRaceData!!.achievedRacePoints
                     showToast(context, "Adatok betöltve!")
 
                     //Ha nem létezik a dokumentum, akkor letöltjük a verseny részleteit, és létrehozzuk a dokumentumot

@@ -50,7 +50,6 @@ import hu.klm60o.spiritrally.useful.showToast
 
 @Composable
 fun MyBottomAppbarComposable(navController: NavController) {
-    val navController = navController
     val context = LocalContext.current
     BottomAppBar(
         actions = {
