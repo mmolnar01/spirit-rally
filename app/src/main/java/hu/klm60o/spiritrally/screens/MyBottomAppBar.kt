@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -82,7 +83,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 IconButton(onClick = {
                     navController.navigate(MapScreen)
                 }) {
-                    Icon(Icons.Filled.Info, contentDescription = "Info screen")
+                    Icon(Icons.Filled.LocationOn, contentDescription = "Info screen")
                 }
                 Text(text = "Térkép",
                     modifier = Modifier

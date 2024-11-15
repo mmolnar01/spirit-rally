@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.utsman.osmandcompose.CameraProperty
 import com.utsman.osmandcompose.CameraState
 import com.utsman.osmandcompose.Marker
@@ -32,6 +34,8 @@ import com.utsman.osmandcompose.OpenStreetMap
 import com.utsman.osmandcompose.Polyline
 import com.utsman.osmandcompose.rememberMarkerState
 import hu.klm60o.spiritrally.R
+import hu.klm60o.spiritrally.data.CurrentRaceData
+import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.useful.showToast
 import io.ticofab.androidgpxparser.parser.GPXParser
@@ -47,23 +51,20 @@ import java.io.InputStream
 
 @Composable
 fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) {
-    val navController = navController
-    //val viewModel = viewModel
-    /*val cameraState = rememberCameraState {
-        geoPoint = GeoPoint(47.46274418232391, 19.041552309632305)
-        zoom = 12.0 // optional, default is 5.0
-    }*/
+
+    val raceDataFromGpx = CurrentRaceData()
+    raceDataFromGpx.distance = 320
+    raceDataFromGpx.start_point = com.google.firebase.firestore.GeoPoint(47.35725982798458, 18.85715482108147)
+    raceDataFromGpx.end_point = com.google.firebase.firestore.GeoPoint(46.138127802247205, 18.1175994573563)
+    raceDataFromGpx.intermediate_points = emptyList()
 
 
-    val testMarkerState = rememberMarkerState(
-        geoPoint = GeoPoint(47.498333, 19.040833)
-    )
 
     val context = LocalContext.current
     val parser = GPXParser()
     val geoPoints: MutableList<GeoPoint> = ArrayList<GeoPoint>()
     try {
-        val input: InputStream = context.assets.open("test.gpx")
+        val input: InputStream = context.assets.open("tabaliget.gpx")
         val parsedGpx = parser.parse(input)
         parsedGpx?.let {
             parsedGpx.tracks.forEach { track ->
@@ -74,6 +75,14 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
                     }
                 }
             }
+            /*parsedGpx.wayPoints.forEach {wayPoint ->
+                if (wayPoint.name.contains("PONT")) {
+                    Log.d(ContentValues.TAG, wayPoint.name.toString())
+                    raceDataFromGpx.intermediate_points = raceDataFromGpx.intermediate_points?.plus(
+                        com.google.firebase.firestore.GeoPoint(wayPoint.latitude, wayPoint.longitude)
+                    )
+                }
+            }*/
             //parsedGpx.tracks[0].trackSegments[0].trackPoints[0].latitude
             //testMarkerState.geoPoint = GeoPoint(parsedGpx.wayPoints[1].latitude, parsedGpx.wayPoints[1].longitude)
         } ?: {
@@ -86,11 +95,15 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
         // do something with this exception
         e.printStackTrace()
     }
+    //viewModel.saveRaceDataToFirestore(Firebase.auth.currentUser!!, LocalContext.current, raceDataFromGpx)
 
 
-    val depokIcon: Drawable? by remember {
-        //mutableStateOf(context.getDrawable(org.osmdroid.library.R.drawable.marker_default))
+    val redIcon: Drawable? by remember {
         mutableStateOf(context.getDrawable(R.drawable.map_marker_red))
+    }
+
+    val greenIcon: Drawable? by remember {
+        mutableStateOf(context.getDrawable(R.drawable.map_marker_green))
     }
 
     val geoPoint = remember {
@@ -118,8 +131,8 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
                 mutableStateOf(
                     CameraState(
                         CameraProperty(
-                            geoPoint = GeoPoint(47.498333, 19.040833),
-                            zoom = 14.0
+                            geoPoint = GeoPoint(47.3645399756769, 18.863085071980695),
+                            zoom = 12.0
                         )
                     )
                 )
@@ -143,10 +156,18 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
             ) {
                 viewModel.racePoints?.forEach { racePoint ->
                     //testMarkerState.geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)
-                    Marker(
-                        state = rememberMarkerState(geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)),
-                        icon = depokIcon
-                    )
+                    if (racePoint.timeStamp != null) {
+                        Marker(
+                            state = rememberMarkerState(geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)),
+                            icon = greenIcon
+                        )
+                    }
+                    else {
+                        Marker(
+                            state = rememberMarkerState(geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)),
+                            icon = redIcon
+                        )
+                    }
                 }
                 /*Marker(
                     state = testMarkerState,

@@ -90,7 +90,7 @@ class UserViewModel : ViewModel() {
                     //Ha nem létezik a dokumentum, akkor letöltjük a verseny részleteit, és létrehozzuk a dokumentumot
                 } else {
                     var currentRaceData: CurrentRaceData?
-                    Firebase.firestore.collection("race_data").document("current_race_data").get()
+                    Firebase.firestore.collection("race_data").document("current_race_data_test").get()
                         .addOnCompleteListener { task ->
                             if(task.isSuccessful) {
                                 val raceDocument = task.result
@@ -148,6 +148,22 @@ class UserViewModel : ViewModel() {
                     Log.d(ContentValues.TAG, "Created user document: Failure")
                     showToast(context, "A dokumentum létrehozása sikertelen")
                 }
+            }
+        }
+    }
+
+    fun saveRaceDataToFirestore(currentUser: FirebaseUser, context: Context, data: CurrentRaceData) {
+        val userDocumentReference = Firebase.firestore.collection("race_data").document("current_race_data_test")
+
+
+        userDocumentReference.set(data).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(ContentValues.TAG, "Created user document: Success")
+                showToast(context, "A dokumentum sikeresen létrehozva")
+            }
+            else {
+                Log.d(ContentValues.TAG, "Created user document: Failure")
+                showToast(context, "A dokumentum létrehozása sikertelen")
             }
         }
     }
