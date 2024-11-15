@@ -8,3 +8,5 @@ https://github.com/osmdroid/osmdroid
 https://github.com/utsmannn/osm-android-compose
 
 https://github.com/journeyapps/zxing-android-embedded
+
+https://github.com/ticofab/android-gpx-parser
