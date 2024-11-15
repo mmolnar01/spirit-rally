@@ -1,8 +1,5 @@
 package hu.klm60o.spiritrally.screens
 
-import android.util.Log
-import android.util.Patterns
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,12 +13,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,10 +34,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.FragmentManager.TAG
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.LoginScreen
@@ -57,7 +50,6 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
     var validEmail = true
     var validPaswword = true
     var validPasswordRepeat = true
-    val navController = navController
     val context = LocalContext.current
     //val viewModel = viewModel
     Surface {
@@ -280,18 +272,6 @@ fun RegisterScreenComposable(navController: NavController, viewModel: UserViewMo
 
 }
 
-fun validateEmailTest(email: String): Boolean {
-    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-}
-
-
-@Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Preview(showBackground = true)
 @Composable

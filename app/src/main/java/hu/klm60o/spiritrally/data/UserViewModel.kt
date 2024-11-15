@@ -114,8 +114,6 @@ class UserViewModel : ViewModel() {
 
                                     this.racePoints = racePoints
 
-                                    //viewModel.racePointsMutable.addAll(racePoints)
-
                                     teamName = currentUser.displayName
 
                                     userDocumentReference.set(this).addOnCompleteListener { task ->
@@ -153,7 +151,7 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun saveRaceDataToFirestore(currentUser: FirebaseUser, context: Context, data: CurrentRaceData) {
+    /*fun saveRaceDataToFirestore(currentUser: FirebaseUser, context: Context, data: CurrentRaceData) {
         val userDocumentReference = Firebase.firestore.collection("race_data").document("current_race_data_test")
 
 
@@ -167,7 +165,7 @@ class UserViewModel : ViewModel() {
                 showToast(context, "A dokumentum létrehozása sikertelen")
             }
         }
-    }
+    }*/
 
     fun setDisplayName(name: String) {
         val user = Firebase.auth.currentUser

@@ -25,10 +25,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.spiritrally.data.News
 import hu.klm60o.spiritrally.data.NewsViewModel
-import hu.klm60o.spiritrally.data.UserViewModel
 
 @Composable
-fun NewsScreenComposable(navController: NavController, viewModel: UserViewModel, newsViewModel : NewsViewModel) {
+fun NewsScreenComposable(navController: NavController, newsViewModel : NewsViewModel) {
     val navController = navController
     //al viewModel = viewModel
     Scaffold(
@@ -114,7 +113,6 @@ fun NewsList(itemList: List<News>) {
                 }
             )
             Divider()
-            //Text(text = item.title)
         }
     }
 }
@@ -125,7 +123,6 @@ fun NewsPreview() {
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         NewsScreenComposable(
             navController = rememberNavController(),
-            viewModel =  UserViewModel(),
             newsViewModel = NewsViewModel()
         )
     }
@@ -137,7 +134,6 @@ fun NewsPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
         NewsScreenComposable(
             navController = rememberNavController(),
-            viewModel =  UserViewModel(),
             newsViewModel = NewsViewModel()
         )
     }

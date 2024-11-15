@@ -17,8 +17,6 @@ import com.google.firebase.ktx.Firebase
 import hu.klm60o.spiritrally.data.CurrentRaceData
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
-import org.osmdroid.bonuspack.routing.OSRMRoadManager
-import org.osmdroid.bonuspack.routing.RoadManager
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Polyline

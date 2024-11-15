@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
     private val barCodeLauncher = registerForActivityResult(ScanContract()) {
             result ->
         if (result.contents == null) {
-            showToast(this, "Beolvasás megszakítve")
+            showToast(this, "Beolvasás megszakítva")
         }
         else {
             //Beolvassuk QR kódot, Int-té alakítjuk és megpróbáljuk beírni a Timestamp-be
@@ -170,7 +170,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            NewsScreenComposable(navController = navController, viewModel = viewModel, newsViewModel = newsViewModel)
+                            NewsScreenComposable(navController = navController, newsViewModel = newsViewModel)
                         }
                     }
                     composable<MapScreen> {

@@ -1,16 +1,12 @@
 package hu.klm60o.spiritrally.screens
 
-import android.content.ContentValues
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,25 +21,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.utsman.osmandcompose.CameraProperty
 import com.utsman.osmandcompose.CameraState
 import com.utsman.osmandcompose.Marker
 import com.utsman.osmandcompose.OpenStreetMap
-import com.utsman.osmandcompose.Polyline
 import com.utsman.osmandcompose.rememberMarkerState
 import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.data.CurrentRaceData
-import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
-import hu.klm60o.spiritrally.useful.showToast
 import io.ticofab.androidgpxparser.parser.GPXParser
-import org.osmdroid.bonuspack.routing.OSRMRoadManager
-import org.osmdroid.bonuspack.routing.RoadManager
-import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.overlay.Polyline
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
@@ -70,21 +57,10 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
             parsedGpx.tracks.forEach { track ->
                 track.trackSegments.forEach { trackSegment ->
                     trackSegment.trackPoints.forEach { trackPoint ->
-                        //Log.d(ContentValues.TAG, it.latitude.toString())
                         geoPoints.add(GeoPoint(trackPoint.latitude, trackPoint.longitude))
                     }
                 }
             }
-            /*parsedGpx.wayPoints.forEach {wayPoint ->
-                if (wayPoint.name.contains("PONT")) {
-                    Log.d(ContentValues.TAG, wayPoint.name.toString())
-                    raceDataFromGpx.intermediate_points = raceDataFromGpx.intermediate_points?.plus(
-                        com.google.firebase.firestore.GeoPoint(wayPoint.latitude, wayPoint.longitude)
-                    )
-                }
-            }*/
-            //parsedGpx.tracks[0].trackSegments[0].trackPoints[0].latitude
-            //testMarkerState.geoPoint = GeoPoint(parsedGpx.wayPoints[1].latitude, parsedGpx.wayPoints[1].longitude)
         } ?: {
 
         }
@@ -95,7 +71,6 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
         // do something with this exception
         e.printStackTrace()
     }
-    //viewModel.saveRaceDataToFirestore(Firebase.auth.currentUser!!, LocalContext.current, raceDataFromGpx)
 
 
     val redIcon: Drawable? by remember {
@@ -121,11 +96,6 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
                 .fillMaxWidth()
                 .padding(innerPadding)
         ) {
-            // define camera state
-            /*val cameraState = rememberCameraState {
-                geoPoint = GeoPoint(47.46274418232391, 19.041552309632305)
-                zoom = 12.0 // optional, default is 5.0
-            }*/
 
             var cameraState by remember {
                 mutableStateOf(
@@ -155,7 +125,6 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
                 cameraState = cameraState
             ) {
                 viewModel.racePoints?.forEach { racePoint ->
-                    //testMarkerState.geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)
                     if (racePoint.timeStamp != null) {
                         Marker(
                             state = rememberMarkerState(geoPoint = GeoPoint(racePoint.location!!.latitude, racePoint.location!!.longitude)),
@@ -169,10 +138,7 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
                         )
                     }
                 }
-                /*Marker(
-                    state = testMarkerState,
-                    icon = depokIcon
-                )*/
+
                 com.utsman.osmandcompose.Polyline(
                     geoPoints = geoPoints,
                     color = Color.Blue

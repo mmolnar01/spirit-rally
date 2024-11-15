@@ -54,6 +54,7 @@ import hu.klm60o.spiritrally.useful.showToast
 fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel) {
     var validEmail = true
     var validPaswword = true
+
     val navController = navController
     val context = LocalContext.current
     val viewModel = viewModel
@@ -161,7 +162,6 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                         if(error == null) {
                             val currentUser = Firebase.auth.currentUser
                             if(currentUser?.isEmailVerified == true) {
-
                                 //Lekérdezzük a bejlentkezett felhasználó eredményeit
                                 //viewModel.teamName = currentUser.displayName
                                 val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
