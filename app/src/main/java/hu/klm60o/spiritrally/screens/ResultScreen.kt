@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,6 +64,9 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
 
 @Composable
 fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved: Int) {
+    /*val test = remember {
+        mutableStateOf(racePoints)
+    }*/
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -133,6 +137,15 @@ fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved
                     } else {
                         Text("Átlagsebesség: ")
                     }
+
+                    /*if (test.value.last().timeStamp != null && test.value.first().timeStamp != null) {
+                        val endTimeStamp = test.value.last().timeStamp!!.seconds
+                        val startTimeStamp = test.value.first().timeStamp!!.seconds
+                        val timeTaken = ((endTimeStamp - startTimeStamp).toDouble()) / 3600
+                        Text("Átlagsebesség: " + (distance / timeTaken).round(2).toString() + " km/h")
+                    } else {
+                        Text("Átlagsebesség: ")
+                    }*/
                 }
             }
         }
@@ -141,7 +154,7 @@ fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved
 
 @Composable
 fun RacePointComposable(racePoint: RacePoint, size: Int) {
-    var racePointCalendar = Calendar.getInstance()
+    val racePointCalendar = Calendar.getInstance()
     val seconds = racePoint.timeStamp?.seconds
     var timeText = "-"
     if (seconds != null) {
@@ -250,7 +263,7 @@ fun ResultPreview() {
     val racePoint7 = RacePoint(7, GeoPoint(1.0, 1.0))
     val racePointsListTest: List<RacePoint> = listOf(racePoint1, racePoint2, racePoint3, racePoint4, racePoint5, racePoint6, racePoint7)
     val viewModelTest = UserViewModel()
-    //viewModelTest.racePoints = racePointsListTest
+    viewModelTest.racePoints = racePointsListTest
     viewModelTest.distance = 100
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         ResultScreenComposable(
