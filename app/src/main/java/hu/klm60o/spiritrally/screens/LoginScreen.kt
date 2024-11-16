@@ -164,7 +164,14 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                             if(currentUser?.isEmailVerified == true) {
                                 //Lekérdezzük a bejlentkezett felhasználó eredményeit
                                 //viewModel.teamName = currentUser.displayName
-                                val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
+                                viewModel.getUserDataFromFirestore(currentUser, context)
+
+                                navController.navigate(NewsScreen) {
+                                    popUpTo(navController.graph.id) {
+                                        inclusive = true
+                                    }
+                                }
+                                /*val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
                                     .collection("my_race_results").document("my_race_results_current")
 
                                 userDocumentReference.get().addOnCompleteListener { task ->
@@ -177,6 +184,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                                             viewModel.distance = userRaceData?.distance
                                             viewModel.racePoints = userRaceData?.racePoints
                                             viewModel.teamName = userRaceData?.teamName
+                                            viewModel.achievedRacePoints = userRaceData!!.achievedRacePoints
                                             showToast(context, "Sikeres bejelentkezés!")
                                             navController.navigate(NewsScreen) {
                                                 popUpTo(navController.graph.id) {
@@ -187,7 +195,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                                             //Ha nem létezik a dokumentum, akkor letöltjük a verseny részleteit, és létrehozzuk a dokumentumot
                                         } else {
                                             var currentRaceData: CurrentRaceData?
-                                            Firebase.firestore.collection("race_data").document("current_race_data").get()
+                                            Firebase.firestore.collection("race_data").document("current_race_data_test").get()
                                                 .addOnCompleteListener { task ->
                                                     if(task.isSuccessful) {
                                                         val raceDocument = task.result
@@ -235,7 +243,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                                                 }
                                         }
                                     }
-                                }
+                                }*/
                             } else {
                                 showToast(context, "Az Email nincs megerősítve")
                             }
