@@ -25,18 +25,22 @@ class UserViewModel : ViewModel() {
     var teamName: String? = null
     var distance: Int? = null
     var racePoints: List<RacePoint>? = null
+    //var racePoints = mutableStateListOf<RacePoint>()
+    //var test = mutableStateOf(racePoints)
     var achievedRacePoints: Int = 0
     //var averageSpeed: Double = 0.0
 
     //@get:Exclude
     //lateinit var navController: NavController
-    //var racePoints = mutableStateListOf<RacePoint>()
-
+    @get:Exclude
+    var test = mutableStateListOf<RacePoint>()
     //var test by mutableStateOf("")
 
     /*var test = remember {
         mutableStateListOf<RacePoint>()
     }*/
+
+    //var test by mutableStateListOf<RacePoint>()
 
     //var racePointsMutable = mutableStateListOf<RacePoint>()
     fun validateEmail(email: String): Boolean {
@@ -81,8 +85,13 @@ class UserViewModel : ViewModel() {
                 //Ha létezik a dokumentum, akkor beállítjuk a viewModel mezőit és megyünk a NewsScreen-re
                 if (document.exists()) {
                     val userRaceData = document.toObject(UserViewModel::class.java)
+                    //val userRaceData = document.toObject(UserRaceData::class.java)
                     distance = userRaceData?.distance
+
                     racePoints = userRaceData?.racePoints
+                    /*if (userRaceData != null) {
+                        userRaceData.racePoints?.let { racePoints.addAll(it) }
+                    }*/
                     //viewModel.racePointsMutable.addAll(userRaceData?.racePoints!!)
                     teamName = userRaceData?.teamName
                     achievedRacePoints = userRaceData!!.achievedRacePoints
@@ -113,6 +122,8 @@ class UserViewModel : ViewModel() {
                                     racePoints.add(RacePoint(i, currentRaceData?.end_point, null))
 
                                     this.racePoints = racePoints
+
+                                    //this.racePoints.addAll(racePoints)
 
                                     teamName = currentUser.displayName
 

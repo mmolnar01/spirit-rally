@@ -20,6 +20,7 @@ import hu.klm60o.spiritrally.data.UserViewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Polyline
+import kotlin.math.round
 
 /*fun validateEmail(email: String): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -49,6 +50,12 @@ fun showToast(context: Context, msg: String) {
         msg,
         Toast.LENGTH_SHORT
     ).show()
+}
+
+fun Double.round(decimals: Int): Double {
+    var multiplier = 1.0
+    repeat(decimals) { multiplier *= 10 }
+    return round(this * multiplier) / multiplier
 }
 
 /*fun getUserDataFromFirestore(currentUser: FirebaseUser, viewModel: UserViewModel, context: Context) {

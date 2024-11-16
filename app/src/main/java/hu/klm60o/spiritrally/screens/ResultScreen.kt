@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,11 +27,11 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.firestore.GeoPoint
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
+import hu.klm60o.spiritrally.useful.round
 import java.util.Calendar
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: UserViewModel) {
-
     /*if (currentUser != null) {
         getUserDataFromFirestore(
             currentUser = currentUser,
@@ -38,7 +39,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: UserViewMode
             context = LocalContext.current
         )
     }*/
-
+    //viewModel.racePoints?.let { viewModel.test.addAll(it) }
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) }
     ) {
@@ -128,7 +129,7 @@ fun RacePointListComposable(racePoints: List<RacePoint>, distance: Int, achieved
                         val endTimeStamp = racePoints.last().timeStamp!!.seconds
                         val startTimeStamp = racePoints.first().timeStamp!!.seconds
                         val timeTaken = ((endTimeStamp - startTimeStamp).toDouble()) / 3600
-                        Text("Átlagsebesség: " + (distance / timeTaken).toString() + " km/h")
+                        Text("Átlagsebesség: " + (distance / timeTaken).round(2).toString() + " km/h")
                     } else {
                         Text("Átlagsebesség: ")
                     }
@@ -249,7 +250,7 @@ fun ResultPreview() {
     val racePoint7 = RacePoint(7, GeoPoint(1.0, 1.0))
     val racePointsListTest: List<RacePoint> = listOf(racePoint1, racePoint2, racePoint3, racePoint4, racePoint5, racePoint6, racePoint7)
     val viewModelTest = UserViewModel()
-    viewModelTest.racePoints = racePointsListTest
+    //viewModelTest.racePoints = racePointsListTest
     viewModelTest.distance = 100
     hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme {
         ResultScreenComposable(
