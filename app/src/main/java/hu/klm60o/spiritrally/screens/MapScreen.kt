@@ -39,11 +39,11 @@ import java.io.InputStream
 @Composable
 fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) {
 
-    val raceDataFromGpx = CurrentRaceData()
+    /*val raceDataFromGpx = CurrentRaceData()
     raceDataFromGpx.distance = 320
     raceDataFromGpx.start_point = com.google.firebase.firestore.GeoPoint(47.35725982798458, 18.85715482108147)
     raceDataFromGpx.end_point = com.google.firebase.firestore.GeoPoint(46.138127802247205, 18.1175994573563)
-    raceDataFromGpx.intermediate_points = emptyList()
+    raceDataFromGpx.intermediate_points = emptyList()*/
 
 
 
@@ -79,10 +79,6 @@ fun MapScreenComposable(navController: NavController, viewModel: UserViewModel) 
 
     val greenIcon: Drawable? by remember {
         mutableStateOf(context.getDrawable(R.drawable.map_marker_green))
-    }
-
-    val geoPoint = remember {
-        listOf(viewModel.racePoints)
     }
 
     Scaffold(

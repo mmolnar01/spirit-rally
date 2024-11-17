@@ -45,13 +45,14 @@ import hu.klm60o.spiritrally.R
 import hu.klm60o.spiritrally.RegisterScreen
 import hu.klm60o.spiritrally.assets.ErrorIcon
 import hu.klm60o.spiritrally.data.CurrentRaceData
+import hu.klm60o.spiritrally.data.NewsViewModel
 import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.ui.theme.ui.theme.SpiritRallyTheme
 import hu.klm60o.spiritrally.useful.showToast
 
 @Composable
-fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel) {
+fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel, newsViewModel: NewsViewModel) {
     var validEmail = true
     var validPaswword = true
 
@@ -165,6 +166,8 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                                 //Lekérdezzük a bejlentkezett felhasználó eredményeit
                                 //viewModel.teamName = currentUser.displayName
                                 viewModel.getUserDataFromFirestore(currentUser, context)
+
+                                newsViewModel.getNews()
 
                                 navController.navigate(NewsScreen) {
                                     popUpTo(navController.graph.id) {
@@ -298,7 +301,8 @@ fun LoginPreview() {
     SpiritRallyTheme {
         LoginScreenComposable(
             navController = rememberNavController(),
-            viewModel =  UserViewModel()
+            viewModel =  UserViewModel(),
+            newsViewModel = NewsViewModel()
         )
     }
 }
@@ -309,7 +313,8 @@ fun LoginPreviewDark() {
     hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme(darkTheme = true) {
         LoginScreenComposable(
             navController = rememberNavController(),
-            viewModel = UserViewModel()
+            viewModel = UserViewModel(),
+            newsViewModel = NewsViewModel()
         )
     }
 }

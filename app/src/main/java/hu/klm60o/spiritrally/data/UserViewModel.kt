@@ -43,23 +43,29 @@ class UserViewModel : ViewModel() {
     //var test by mutableStateListOf<RacePoint>()
 
     //var racePointsMutable = mutableStateListOf<RacePoint>()
+
+    //Ellenőrízzük az email címet
     fun validateEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
+    //Ellenőrízzük a jelszót
     fun validatePassword(password: String): Boolean {
         return password.length >= 5
     }
 
+    //Ellenőrízzük, hogy a két beírt jelszó egyezik-e
     fun validatePasswordRepeat(password: String, passwordRepeat: String): Boolean {
         return password.equals(passwordRepeat)
     }
 
+    //Regisztráció
     fun registerUser(email: String, password: String, onResult: (Throwable?) -> Unit) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { onResult(it.exception) }
     }
 
+    //Bejelentkezés
     fun loginUSer(email: String, password: String, onResult: (Throwable?) -> Unit) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { onResult(it.exception) }
@@ -85,28 +91,26 @@ class UserViewModel : ViewModel() {
                 //Ha létezik a dokumentum, akkor beállítjuk a viewModel mezőit és megyünk a NewsScreen-re
                 if (document.exists()) {
                     val userRaceData = document.toObject(UserViewModel::class.java)
-                    //val userRaceData = document.toObject(UserRaceData::class.java)
                     distance = userRaceData?.distance
 
                     racePoints = userRaceData?.racePoints
-                    /*if (userRaceData != null) {
-                        userRaceData.racePoints?.let { racePoints.addAll(it) }
-                    }*/
-                    //viewModel.racePointsMutable.addAll(userRaceData?.racePoints!!)
                     teamName = userRaceData?.teamName
                     achievedRacePoints = userRaceData!!.achievedRacePoints
-                    showToast(context, "Adatok betöltve!")
 
-                    //Ha nem létezik a dokumentum, akkor letöltjük a verseny részleteit, és létrehozzuk a dokumentumot
-                } else {
+                    showToast(context, "Adatok betöltve!")
+                }
+                //Ha nem létezik a dokumentum, akkor letöltjük a verseny részleteit, és létrehozzuk a dokumentumot
+                else {
                     var currentRaceData: CurrentRaceData?
-                    Firebase.firestore.collection("race_data").document("current_race_data_test").get()
+                    Firebase.firestore.collection("race_data").document("current_race_data_test")
+                        .get()
                         .addOnCompleteListener { task ->
-                            if(task.isSuccessful) {
+                            if (task.isSuccessful) {
                                 val raceDocument = task.result
                                 //Ha sikerül és létezik, betöltjük a viewModel-be és megyünk a NewsScreen-re
-                                if(raceDocument.exists()) {
-                                    currentRaceData = raceDocument.toObject(CurrentRaceData::class.java)
+                                if (raceDocument.exists()) {
+                                    currentRaceData =
+                                        raceDocument.toObject(CurrentRaceData::class.java)
 
                                     distance = currentRaceData?.distance
                                     val racePoints = mutableListOf<RacePoint>()
@@ -123,17 +127,24 @@ class UserViewModel : ViewModel() {
 
                                     this.racePoints = racePoints
 
-                                    //this.racePoints.addAll(racePoints)
-
                                     teamName = currentUser.displayName
 
                                     userDocumentReference.set(this).addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
-                                            Log.d(ContentValues.TAG, "Created user document: Success")
+                                            Log.d(
+                                                ContentValues.TAG,
+                                                "Created user document: Success"
+                                            )
                                             showToast(context, "A dokumentum sikeresen létrehozva")
                                         } else {
-                                            Log.d(ContentValues.TAG, "Created user document: Failure")
-                                            showToast(context, "A dokumentum létrehozása sikertelen")
+                                            Log.d(
+                                                ContentValues.TAG,
+                                                "Created user document: Failure"
+                                            )
+                                            showToast(
+                                                context,
+                                                "A dokumentum létrehozása sikertelen"
+                                            )
                                         }
                                     }
                                 }

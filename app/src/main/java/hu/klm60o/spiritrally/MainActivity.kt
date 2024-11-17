@@ -40,7 +40,9 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<UserViewModel>()
 
-    private lateinit var newsViewModel: NewsViewModel
+    //private lateinit var newsViewModel: NewsViewModel
+
+    private val newsViewModel by viewModels<NewsViewModel>()
 
     private var textResult = mutableStateOf("")
 
@@ -145,7 +147,8 @@ class MainActivity : ComponentActivity() {
                         currentUser = currentUser,
                         context = LocalContext.current
                     )
-                    newsViewModel = NewsViewModel()
+                    //newsViewModel = NewsViewModel()
+                    newsViewModel.getNews()
                 }
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = startDestination) {
@@ -154,7 +157,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            LoginScreenComposable(navController = navController, viewModel = viewModel)
+                            LoginScreenComposable(navController = navController, viewModel = viewModel, newsViewModel = newsViewModel)
                         }
                     }
                     composable<RegisterScreen> {

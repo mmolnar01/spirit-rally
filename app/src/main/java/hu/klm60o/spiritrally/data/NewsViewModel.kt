@@ -12,11 +12,11 @@ class NewsViewModel : ViewModel() {
 
     val itemList: MutableState<List<News>> = mutableStateOf(emptyList())
 
-    init {
+    /*init {
         getNews()
-    }
+    }*/
 
-    private fun getNews() {
+    fun getNews() {
         firestore.collection("race_news")
             .get()
             .addOnSuccessListener { documents ->
