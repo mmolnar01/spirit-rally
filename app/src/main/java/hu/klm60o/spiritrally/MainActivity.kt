@@ -18,6 +18,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -72,10 +74,12 @@ class MainActivity : ComponentActivity() {
         else {
             //Beolvassuk QR kódot, Int-té alakítjuk és megpróbáljuk beírni a Timestamp-be
             textResult.value = result.contents
-            val textResultInteger = textResult.value.toString().toIntOrNull()
+            val textResultInteger = textResult.value.toIntOrNull()
 
             if (viewModel.racePoints != null && textResultInteger != null && currentUser != null && viewModel.racePoints!!.size >= textResultInteger && viewModel.racePoints!![textResultInteger].timeStamp == null) {
-                val currentLocation = fusedLocationClient.lastLocation
+                //val currentLocation = fusedLocationClient.lastLocation
+                val cancellationTokenSource = CancellationTokenSource()
+                val currentLocation = fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token)
 
                 currentLocation.addOnSuccessListener {
 
