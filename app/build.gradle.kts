@@ -13,6 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "hu.klm60o.spiritrally"
+        testApplicationId = "hu.klm60o.spiritrally.tests"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
@@ -58,6 +59,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
     implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation("com.google.firebase:firebase-firestore:25.1.0")
+    implementation("junit:junit:4.12")
 
     val nav_version = "2.8.2"
 

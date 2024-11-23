@@ -1,9 +1,9 @@
-package hu.klm60o.spiritrally
+package hu.klm60o.spiritrally.tests
 
 import hu.klm60o.spiritrally.useful.round
-import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
