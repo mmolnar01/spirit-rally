@@ -120,4 +120,7 @@ dependencies {
 
     //Location
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    //Mockito
+    implementation("org.mockito:mockito-core:5.14.2")
 }
