@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -119,7 +120,8 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 20.dp, 0.dp, 0.dp)
+                    .testTag("EmailTest"),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
@@ -151,7 +153,8 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .testTag("PasswordTest"),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
