@@ -1,11 +1,17 @@
 package hu.klm60o.spiritrally.tests
 
+import android.content.Context
+import android.util.Patterns
+import com.google.firebase.auth.FirebaseUser
+import hu.klm60o.spiritrally.data.RacePoint
 import hu.klm60o.spiritrally.data.UserViewModel
 import hu.klm60o.spiritrally.useful.round
 
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito
 
 /**
@@ -33,8 +39,17 @@ class ValidateEmailTest {
     @Before
     fun init() {
         mockedUserViewModel = Mockito.mock(UserViewModel::class.java)
-        Mockito.`when`(mockedUserViewModel.validateEmail("test@test.com")).thenReturn(true)
-        Mockito.`when`(mockedUserViewModel.validateEmail("test@test")).thenReturn(false)
+
+        Mockito.`when`(mockedUserViewModel.validateEmail(anyString())).thenReturn(false)
+        Mockito.`when`(mockedUserViewModel.validateEmail(ArgumentMatchers.matches("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"))).thenReturn(true)
+
+        Mockito.`when`(mockedUserViewModel.validatePasswordRepeat("jelszo", "jelszo")).thenReturn(true)
     }
 
     @Test
@@ -45,5 +60,36 @@ class ValidateEmailTest {
     @Test
     fun email_isIncorrect() {
         assertFalse(mockedUserViewModel.validateEmail("test@test"))
+    }
+
+    @Test
+    fun passwordRepeat_isCorrect() {
+        assertTrue(mockedUserViewModel.validatePasswordRepeat("jelszo", "jelszo"))
+    }
+}
+
+class GetRaceDataTest {
+    lateinit var mockedUserViewModel: UserViewModel
+    lateinit var mockedFirebaseUser: FirebaseUser
+    lateinit var mockedContext: Context
+    lateinit var racePoints: MutableList<RacePoint>
+
+    @Before
+    fun init() {
+        mockedUserViewModel = Mockito.mock(UserViewModel::class.java)
+        mockedFirebaseUser = Mockito.mock(FirebaseUser::class.java)
+        mockedContext = Mockito.mock(Context::class.java)
+
+
+        Mockito.`when`(mockedUserViewModel.getUserDataFromFirestore(mockedFirebaseUser, mockedContext))
+
+        racePoints.add(RacePoint())
+        racePoints.add(RacePoint())
+
+    }
+
+    @Test
+    fun raceData_Get() {
+
     }
 }
