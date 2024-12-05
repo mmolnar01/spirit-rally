@@ -11,4 +11,6 @@
     <string name="title_activity_profile_screen">ProfileScreen</string>
     <string name="title_activity_useful_methods">UsefulMethods</string>
     <string name="title_activity_icon_error">IconError</string>
+    <string name="email_field_content_description">email_field</string>
+    <string name="password_field_content_description">password_field</string>
 </resources>

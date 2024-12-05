@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +35,7 @@ import hu.klm60o.spiritrally.screens.ProfileScreenComposable
 import hu.klm60o.spiritrally.screens.RegisterScreenComposable
 import hu.klm60o.spiritrally.screens.ResultScreenComposable
 import hu.klm60o.spiritrally.ui.theme.SpiritRallyTheme
+import hu.klm60o.spiritrally.useful.round
 import hu.klm60o.spiritrally.useful.showToast
 import kotlinx.serialization.Serializable
 import java.util.Calendar
@@ -95,9 +97,16 @@ class MainActivity : ComponentActivity() {
 
                         viewModel.racePoints!![textResultInteger].timeStamp = Timestamp(calendar.time)
 
-                        //A rajtot és a célt nem kell beleszámolni a teljesített elennörző pontokba
+                        //A rajtot és a célt nem kell beleszámolni a teljesített ellenőrző pontokba
                         if (textResultInteger != 0 && textResultInteger != viewModel.racePoints!!.size) {
                             viewModel.achievedRacePoints += 1
+                        }
+
+                        if (viewModel.racePoints!!.last().timeStamp != null && viewModel.racePoints!!.first().timeStamp != null) {
+                            val endTimeStamp = viewModel.racePoints!!.last().timeStamp!!.seconds
+                            val startTimeStamp = viewModel.racePoints!!.first().timeStamp!!.seconds
+                            val timeTaken = ((endTimeStamp - startTimeStamp).toDouble()) / 3600
+                            viewModel.averageSpeed = viewModel.distance?.div(timeTaken)?.round(2)
                         }
 
                         viewModel.saveCurrentRaceDataToFirestore(currentUser, this)

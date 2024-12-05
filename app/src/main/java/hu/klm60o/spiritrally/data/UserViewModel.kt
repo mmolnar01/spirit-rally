@@ -28,7 +28,7 @@ class UserViewModel : ViewModel() {
     //var racePoints = mutableStateListOf<RacePoint>()
     //var test = mutableStateOf(racePoints)
     var achievedRacePoints: Int = 0
-    //var averageSpeed: Double = 0.0
+    var averageSpeed: Double? = null
 
     //@get:Exclude
     //lateinit var navController: NavController
