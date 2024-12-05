@@ -120,8 +120,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp)
-                    .testTag("EmailTest"),
+                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
@@ -153,8 +152,7 @@ fun LoginScreenComposable(navController: NavController, viewModel: UserViewModel
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
-                    .testTag("PasswordTest"),
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
